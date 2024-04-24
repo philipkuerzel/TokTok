@@ -9,7 +9,7 @@ process.loadEnvFile(".env");
 await mongoose.connect(process.env.MONGODB_URL);
 
 const app = express();
-app.use(morgan);
+app.use(morgan)
 app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
 app.use(cookieParser());
 
