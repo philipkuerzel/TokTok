@@ -52,7 +52,8 @@ export const updateUserDetails = async (req, res) => {
   const profilePictureUrl = response.secure_url;
   const user = await User.findByIdAndUpdate(
     { _id: id },
-    { username, email, bio, profilePictureUrl }
+    { username, email, bio, profilePictureUrl },
+    { new: true }
   );
   if (!user) res.status(401).json({ message: "User not found" });
   res.json(user);
