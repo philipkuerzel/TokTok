@@ -7,4 +7,7 @@ const mult = multer();
 
 router.get("/", getComments);
 
+router.get("/:id", (req, res) => {}
+    );
+
 export default router;
