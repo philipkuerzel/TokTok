@@ -44,6 +44,7 @@ export const addComment = async (req, res) => {
     comment,
     username: user.username,
   });
+
   await newComment.save().then(() => res.json("Comment added"));
   const updatePost = await Post.findByIdAndUpdate(
     { _id: id },
@@ -70,4 +71,15 @@ export const deleteComment = async (req, res) => {
   );
   if (!updatePost) res.status(401).json({ message: "Comment not deleted" });
   res.json(updatePost);
+};
+
+export const like = async (req, res) => {
+  const { postId, userId } = req.params;
+  const post = await Post.findById({ _id: postId });
+  if (post.likes.includes(userId)) {
+    await Post.findByIdAndUpdate({ _id: postId }, { $pull: { likes: userId } });
+  } else {
+    await Post.findByIdAndUpdate({ _id: postId }, { $push: { likes: userId } });
+  }
+  res.json(post);
 };

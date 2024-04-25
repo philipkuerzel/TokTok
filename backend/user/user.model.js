@@ -26,7 +26,6 @@ const userSchema = new Schema({
   job: {
     type: String,
   },
-  likes: { type: [{ type: Schema.Types.ObjectId, ref: "Post" }] },
   followers: [{ type: Schema.Types.ObjectId, ref: "User" }],
   following: [{ type: Schema.Types.ObjectId, ref: "User" }],
   profilePictureUrl: {
