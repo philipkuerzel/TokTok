@@ -1,3 +1,4 @@
+import { uploadImage } from "../utils/uploadImage.js";
 import { User } from "./user.model.js";
 import bcrypt from "bcrypt";
 
@@ -46,7 +47,9 @@ export const getCurrentUserDetails = async (req, res) => {
 
 export const updateUserDetails = async (req, res) => {
   const { id } = req.params;
-  const { username, email, bio, profilePictureUrl } = req.body;
+  const { username, email, bio } = req.body;
+  const response = await uploadImage(req.file.buffer);
+  const profilePictureUrl = response.secure_url;
   const user = await User.findByIdAndUpdate(
     { _id: id },
     { username, email, bio, profilePictureUrl }

@@ -1,7 +1,7 @@
 import { Comment } from "../comment/comment.model.js";
 import { User } from "../user/user.model.js";
 import { Post } from "./post.model.js";
-import bcrypt from "bcrypt";
+import { uploadImage } from "../utils/uploadImage.js";
 
 export const getPosts = async (req, res) => {
   const posts = await Post.find().sort({ date: -1 });
@@ -20,8 +20,11 @@ export const getCommentsByPost = async (req, res) => {
 };
 
 export const createPost = async (req, res) => {
-  const { caption, imageUrl } = req.body;
+  const { caption } = req.body;
   const { userId } = req.params;
+  const response = await uploadImage(req.file.buffer);
+  const imageUrl = response.secure_url;
+  console.log(imageUrl);
   const user = await User.findById(userId);
   const newPost = new Post({
     caption,
