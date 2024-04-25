@@ -9,6 +9,7 @@ const postSchema = new Schema({
     required: true,
   },
   comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
+  likes: [{ type: Schema.Types.ObjectId, ref: "User" }],
   username: {
     type: String,
   },

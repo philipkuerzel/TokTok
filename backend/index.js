@@ -7,6 +7,7 @@ import { v2 as cloudinary } from "cloudinary";
 import userRouter from "./user/user.routes.js";
 import postRouter from "./post/post.routes.js";
 import commentRouter from "./comment/comment.routes.js";
+import authRouter from "./auth/auth.routes.js";
 process.loadEnvFile(".env");
 
 await mongoose.connect(process.env.MONGODB_URL);
@@ -18,10 +19,12 @@ cloudinary.config({
 });
 
 const app = express();
+app.use(express.json())
 app.use(morgan("dev"));
 app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
 app.use(cookieParser());
 app.use("/users", userRouter);
+app.use("/auth", authRouter);
 app.use("/posts", postRouter);
 app.use("/comments", commentRouter);
 
