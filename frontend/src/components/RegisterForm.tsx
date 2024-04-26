@@ -14,7 +14,8 @@ const RegisterForm = () => {
 		try {
 			const response = await api.post("users/register", { body: inputData });
 			const json = await response.json();
-			navigate("/");
+			console.log(json);
+			navigate("/login");
 		} catch (err) {
 			console.error(err);
 		}
@@ -27,7 +28,6 @@ const RegisterForm = () => {
 				Account
 			</div>
 			<div className="w-[140px] h-[140px] relative">
-				{/* <div className="w-[140px] h-[140px] left-0 top-0 absolute bg-gradient-to-l from-rose-500 to-red-300 rounded-[48px]"> */}
 				<img src="../img/Type=Logo Default, Component=Logo.jpg" alt="" />
 			</div>
 			<form
@@ -51,10 +51,6 @@ const RegisterForm = () => {
 							placeholder="email"
 						/>
 					</div>
-					{/* <div className="w-5 h-5 px-[1.67px] py-[2.50px] justify-center items-center flex">
-                    <img  />
-                </div> */}
-					{/* <div className="grow shrink basis-0 text-neutral-400 text-sm font-normal font-['Urbanist'] leading-tight tracking-tight"></div> */}
 					<div className="w-[380px] h-[60px] px-5 bg-neutral-50 rounded-xl justify-start items-center gap-3 inline-flex">
 						<input
 							className="w-[380px] h-[60px] px-5 bg-neutral-50 rounded-xl justify-start items-center gap-3 inline-flex outline-none"
@@ -65,7 +61,6 @@ const RegisterForm = () => {
 						<div className="w-5 h-5 px-[2.92px] py-[1.67px] justify-center items-center flex">
 							<img />
 						</div>
-						{/* <div className="grow shrink basis-0 text-neutral-400 text-sm font-normal font-['Urbanist'] leading-tight tracking-tight">Password</div> */}
 						<div className="w-5 h-5 px-[1.67px] py-[2.92px] justify-center items-center flex">
 							<img />
 						</div>
