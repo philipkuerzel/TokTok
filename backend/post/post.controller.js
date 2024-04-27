@@ -9,7 +9,7 @@ export const getPosts = async (req, res) => {
 };
 
 export const getPost = async (req, res) => {
-  const post = await Post.findById(req.params.id);
+  const post = await Post.find({ authorId: req.params.id });
   res.json(post);
 };
 
@@ -30,6 +30,7 @@ export const createPost = async (req, res) => {
     caption,
     imageUrl,
     username: user.username,
+    authorId: userId,
   });
   await newPost.save();
   if (!newPost) {
