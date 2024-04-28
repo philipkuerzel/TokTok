@@ -31,6 +31,7 @@ export const useStore = create<StoreState>()(
       logout: async () => {
         await api.post("auth/logout", { credentials: "include" });
         set({ user: null });
+
       },
     }),
     {
