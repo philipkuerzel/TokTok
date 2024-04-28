@@ -7,7 +7,16 @@ const ProfilePosts = () => {
 
   return (
     <>
-      <CardContent className="p-0 flex flex-col items-center">
+      <div className="flex justify-center w-32">
+        <div className="p-4 cursor-pointer">
+          <div className="flex flex-row gap-2 justify-center">
+            <img src="../img/feeds.svg" />
+            <p className="text-xl font-semibold text-primary-500">Feeds</p>
+          </div>
+          <div className="border-2 border-primary-500 mt-2 w-28"></div>
+        </div>
+      </div>
+      <CardContent className="p-2 flex flex-col items-center">
         <div className="grid grid-cols-3 gap-0.5 max-w-3xl">
           {posts.map((post) => (
             <a

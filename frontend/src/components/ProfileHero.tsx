@@ -1,5 +1,5 @@
 import { Card, CardHeader } from "@/components/ui/card";
-import { Separator } from "@radix-ui/react-separator";
+import { Separator } from "@/components/ui/separator";
 import { Avatar } from "@/components/ui/avatar";
 import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { Fulldata, Posts, UserData, useStore } from "@/zustand";
@@ -9,7 +9,7 @@ const ProfileHero = () => {
   const profileData = userDataFull[0];
   return (
     <>
-      <Card className="w-full rounded-none border-none flex flex-col items-center">
+      <Card className="w-full rounded-none border-none flex flex-col items-center shadow-none">
         <CardHeader className="p-4">
           <div className="flex flex-col items-center gap-4">
             <Avatar className="w-40 h-40 border">
@@ -25,6 +25,7 @@ const ProfileHero = () => {
               {profileData.bio}
             </div>
             <div className="flex h-5 items-center space-x-4 text-sm">
+              {" "}
               <div>
                 <span className="font-bold">{posts.length}</span> Posts
               </div>
@@ -43,6 +44,7 @@ const ProfileHero = () => {
                 Following
               </div>
             </div>
+            <Separator className="my-4" />
           </div>
         </CardHeader>
       </Card>

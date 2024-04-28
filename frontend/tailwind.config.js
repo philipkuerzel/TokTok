@@ -1,14 +1,34 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
   ],
   prefix: "",
   theme: {
+    fontFamily: {
+      sans: ["Urbanist", "sans"],
+    },
+    colors: {
+      primary: {
+        DEFAULT: "hsl(var(--primary))",
+        foreground: "hsl(var(--primary-foreground))",
+        50: "#fff0f1",
+        100: "#ffe2e4",
+        200: "#ffcad0",
+        300: "#ff9fa9",
+        400: "#ff697b",
+        500: "#ff4d67",
+        600: "#ed113b",
+        700: "#c80832",
+        800: "#a80931",
+        900: "#8f0c31",
+        950: "#500115",
+      },
+    },
     container: {
       center: true,
       padding: "2rem",
@@ -74,4 +94,4 @@ module.exports = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-}
+};
