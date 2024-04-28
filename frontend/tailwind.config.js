@@ -28,6 +28,7 @@ export default {
         900: "#8f0c31",
         950: "#500115",
       },
+      black: "#000",
     },
     container: {
       center: true,
