@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import { useEffect } from "react";
 import { useStore } from "@/zustand";
+import EditProfile from "./pages/EditProfile";
 
 function App() {
   const { user, loadCurrentUserData } = useStore() as Fulldata & UserData;
@@ -15,7 +16,7 @@ function App() {
     }
     loadCurrentUserData();
   }, [navigate, loadCurrentUserData]);
-  
+
   return (
     <>
       <Routes>
@@ -23,6 +24,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/edit-profile/:userId" element={<EditProfile />} />
+        <Route path="*" element={<div>404</div>} />
       </Routes>
     </>
   );

@@ -16,10 +16,12 @@ const ProfileHero = () => {
               <AvatarImage src={profileData.profilePictureUrl} />
               <AvatarFallback>{profileData.username}</AvatarFallback>
             </Avatar>
-            <img
-              src="../img/profile-edit.svg"
-              className="z-10 absolute top-[14rem] left-[60%] sm:left-[54%] sm:top-[40%]"
-            />
+            <a href={`http://localhost:5173/edit-profile/${profileData._id}`}>
+              <img
+                src="../img/profile-edit.svg"
+                className="z-10 absolute top-[14rem] left-[60%] sm:left-[54%] sm:top-[40%]"
+              />
+            </a>
             <div className="text-3xl font-bold">{profileData.username}</div>
             <div className="text-lg font-normal text-neutral-400">
               {profileData.bio}
