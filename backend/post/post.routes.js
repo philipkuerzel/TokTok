@@ -10,6 +10,7 @@ import {
   getPost,
   getPosts,
   like,
+  getPostsByUserId,
 } from "./post.controller.js";
 
 const router = express.Router();
@@ -18,6 +19,7 @@ const mult = multer();
 router.get("/", checkAuth, getPosts);
 router.post("/like/:postId/:userId", checkAuth, like);
 router.get("/:id", checkAuth, getPost);
+router.get("/user/:userId", checkAuth, getPostsByUserId);
 router.get("/:id/comments", checkAuth, getCommentsByPost);
 router.post("/:userId/", [checkAuth, mult.single("image")], createPost);
 router.post("/:id/:userId", checkAuth, addComment);

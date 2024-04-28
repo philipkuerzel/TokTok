@@ -9,7 +9,12 @@ export const getPosts = async (req, res) => {
 };
 
 export const getPost = async (req, res) => {
-  const post = await Post.find({ authorId: req.params.id });
+  const post = await Post.findById(req.params.id);
+  res.json(post);
+};
+
+export const getPostsByUserId = async (req, res) => {
+  const post = await Post.find({ authorId: req.params.userId });
   res.json(post);
 };
 
