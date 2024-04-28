@@ -7,15 +7,7 @@ import ProfileHero from "../components/ProfileHero";
 import ProfileHeader from "@/components/ProfileHeader";
 
 const Profile = () => {
-  const { user, getUserdataFull } = useStore() as Fulldata & UserData;
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!user) {
-      navigate("/login");
-    }
-    getUserdataFull(user[0]._id);
-  }, [navigate, user, getUserdataFull]);
+  const { user } = useStore() as Fulldata & UserData;
 
   return (
     <>
