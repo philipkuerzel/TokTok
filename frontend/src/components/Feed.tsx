@@ -6,7 +6,6 @@ const Feed = () => {
     const [posts, setPosts] = useState([])
     useEffect(()=> {
         getFeed().then((json)=> {
-            console.log(json);
             setPosts(json)
         })
     }, [])

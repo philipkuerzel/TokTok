@@ -13,6 +13,9 @@ const postSchema = new Schema({
   username: {
     type: String,
   },
+  userId: {
+    type: String, //new
+  },
   date: {
     type: Date,
     default: Date.now,

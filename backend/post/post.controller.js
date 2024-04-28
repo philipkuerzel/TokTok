@@ -30,6 +30,7 @@ export const createPost = async (req, res) => {
     caption,
     imageUrl,
     username: user.username,
+    userId, // new
   });
   await newPost.save();
   if (!newPost) {
