@@ -9,13 +9,11 @@ const Home = () => {
   };
   return (
     <>
-      <div>Home</div>
       <button onClick={handleLogout}>Logout</button>
       <a href="/profile">Profile</a>
+      <Feed />
     </>
   );
 };
 
 export default Home;
-
-

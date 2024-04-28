@@ -48,31 +48,31 @@ export const useStore = create(
       user: null,
       loadCurrentUserData: async () => {
         const data = (await api
-          .get("http://localhost:3000/users/currentUser", {
+          .get(`users/currentUser`, {
             credentials: "include",
           })
           .json()) as UserData;
         set({ user: data });
         const userData = (await api
-          .get(`http://localhost:3000/users/${data._id}`, {
+          .get(`users/${data._id}`, {
             credentials: "include",
           })
           .json()) as UserData;
         set({ user: userData });
         const getPosts = (await api
-          .get(`http://localhost:3000/posts/user/${data._id}`, {
+          .get(`posts/user/${data._id}`, {
             credentials: "include",
           })
           .json()) as Posts[];
         set({ posts: getPosts });
         const getComments = (await api
-          .get("http://localhost:3000/comments", {
+          .get(`comments`, {
             credentials: "include",
           })
           .json()) as Comments[];
         set({ comments: getComments });
         const FullUserData = (await api
-          .get(`http://localhost:3000/users/${data._id}`, {
+          .get(`users/${data._id}`, {
             credentials: "include",
           })
           .json()) as Fulldata;
@@ -81,7 +81,7 @@ export const useStore = create(
       },
 
       logout: async () => {
-        await api.post("http://localhost:3000/auth/logout", {
+        await api.post(`auth/logout`, {
           credentials: "include",
         });
         set({ user: null });

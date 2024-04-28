@@ -1,27 +1,27 @@
 import { useEffect, useState } from "react";
-import {getFeed} from '@/lib/api'
+import { getFeed } from "@/lib/api";
 import FeedCard from "./FeedCard";
 const Feed = () => {
+  const [posts, setPosts] = useState([]);
+  const refreshPage = () => {
+    getFeed().then((json) => {
+      setPosts(json);
+    });
+  };
+  useEffect(() => {
+    refreshPage();
+  }, []);
+  return (
+    <>
+      {posts.map((post) => {
+        return (
+          <div key={post._id}>
+            <FeedCard post={post} refresh={refreshPage} />
+          </div>
+        );
+      })}
+    </>
+  );
+};
 
-    const [posts, setPosts] = useState([])
-    useEffect(()=> {
-        getFeed().then((json)=> {
-            setPosts(json)
-        })
-    }, [])
-    return ( 
-        <>
-        {posts.map((post) => {
-            return (
-                <div key={post._id}>
-                    <FeedCard 
-                    post={post}
-                    />
-                </div>
-            )
-        })}
-        </>
-     );
-}
- 
 export default Feed;
