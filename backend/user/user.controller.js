@@ -30,9 +30,9 @@ export const registerUser = async (req, res) => {
 export const getUserDetails = async (req, res) => {
   console.dir(req.user);
   const { id } = req.params;
-  const user = await User.findById(id);
+  const user = await User.findById(id).lean();
   if (!user) res.status(401).json({ message: "User not found" });
-  res.json(user);
+  res.json([user]);
 };
 
 export const getCurrentUserDetails = async (req, res) => {

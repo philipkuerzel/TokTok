@@ -13,6 +13,11 @@ export const getPost = async (req, res) => {
   res.json(post);
 };
 
+export const getPostsByUserId = async (req, res) => {
+  const post = await Post.find({ authorId: req.params.userId });
+  res.json(post);
+};
+
 export const getCommentsByPost = async (req, res) => {
   const post = await Post.findById(req.params.id).populate("comments");
   if (!post) res.status(401).json({ message: "Post not found" });
@@ -30,7 +35,7 @@ export const createPost = async (req, res) => {
     caption,
     imageUrl,
     username: user.username,
-    userId, // new
+    authorId: userId,
   });
   await newPost.save();
   if (!newPost) {
