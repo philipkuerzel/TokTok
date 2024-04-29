@@ -20,7 +20,7 @@ const LoginForm = () => {
         credentials: "include",
       });
       await loadCurrentUserData();
-      
+
       navigate("/");
     } catch (error) {
       setError(true);

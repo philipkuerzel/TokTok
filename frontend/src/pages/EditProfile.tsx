@@ -149,6 +149,7 @@ const EditProfile = () => {
                     {...field}
                     defaultValue="Male"
                     className="min-w-[300px] bg-black-50 border-none"
+                    type="select"
                   />
                 </FormControl>
                 <FormMessage />
