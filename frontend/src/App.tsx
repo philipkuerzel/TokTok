@@ -6,8 +6,7 @@ import Profile from "./pages/Profile";
 import { useEffect } from "react";
 import { Fulldata, UserData, useStore } from "@/zustand";
 import EditProfile from "./pages/EditProfile";
-// import Search from "./pages/Search";
-
+import SplashScreen from "./components/SplashScreen";
 
 function App() {
   const { user, loadCurrentUserData } = useStore() as Fulldata & UserData;
@@ -22,8 +21,8 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Home />} />
-        {/* <Route path="/search" element={<Search/>}/> */}
+        <Route path="/feed" element={<Home />} />
+        <Route path="/" element={<SplashScreen/>}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<Profile />} />

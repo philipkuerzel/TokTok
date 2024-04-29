@@ -23,7 +23,7 @@ const FeedHeader = ({ profile }) => {
           </Avatar>
           <div className="flex flex-col">
             <h5>{profile.username}</h5>
-            <p className="text-gray-500">{profile.job}</p>
+            <p className="text-black-400">{profile.job}</p>
           </div>
         </div>
         <DropdownMenu>

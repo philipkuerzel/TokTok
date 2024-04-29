@@ -40,7 +40,11 @@ const FeedCard = ({ post, refresh }) => {
             <button onClick={handleLike}>
               <img
                 className={isClicked ? "jello-horizontal" : ""}
-                src={isLiked ? "./img/liked.svg" : "./img/favorites.svg"}
+                src={
+                  post.likes.includes(user[0]?._id)
+                    ? "./img/liked.svg"
+                    : "./img/favorites.svg"
+                }
                 alt=""
               />
             </button>
