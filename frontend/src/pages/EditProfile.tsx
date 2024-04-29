@@ -7,24 +7,111 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Fulldata, UserData, useStore } from "@/zustand";
 import { useRef } from "react";
 import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { api } from "@/lib/api";
 
 const EditProfile = () => {
-  const { userDataFull } = useStore() as Fulldata & UserData;
+  const { userDataFull, loadCurrentUserData } = useStore() as Fulldata &
+    UserData;
   const user = userDataFull[0];
-  const form = useForm();
   const hiddenFileInput = useRef<HTMLInputElement>(null);
   const handleClick = () => {
-    hiddenFileInput.current.click();
+    hiddenFileInput.current?.click();
+  };
+
+  const formData = new FormData();
+  const handleChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        if (reader.result instanceof ArrayBuffer) {
+          const buffer = reader.result;
+          const formData = new FormData();
+          formData.append("profilepicture", new Blob([buffer]));
+          form.setValue("profilepicture", new Blob([buffer]));
+        }
+      };
+      reader.readAsArrayBuffer(file);
+    }
+  };
+
+  const formSchema = z.object({
+    username: z.string().min(2, {
+      message: "Username must be at least 2 characters.",
+    }),
+    profilepicture: z.instanceof(Blob).optional(),
+    bio: z.string().max(160, {
+      message: "Bio must be at most 160 characters.",
+    }),
+    birthdate: z.string(),
+    email: z.string().email({
+      message: "Please enter a valid email address.",
+    }),
+    phone: z.string().optional(),
+    website: z.string().url({
+      message: "Please enter a valid URL.",
+    }),
+    gender: z.string().min(1, {
+      message: "Please select a Gender.",
+    }),
+    job: z.string().optional(),
+    fullname: z.string().optional(),
+  });
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      username: user.username,
+      bio: user.bio,
+      birthdate: user.birthdate,
+      email: user.email,
+      phone: user.phone,
+      website: user.website,
+      gender: user.gender,
+      job: user.job,
+      fullname: user.fullname,
+    },
+  });
+
+  const fileRef = useRef(null);
+
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    formData.append("username", values.username ?? "");
+    formData.append("bio", values.bio ?? "");
+    formData.append("birthdate", values.birthdate ?? "");
+    formData.append("email", values.email ?? "");
+    formData.append("phone", values.phone ?? "");
+    formData.append("website", values.website);
+    formData.append("image", values.profilepicture ?? "");
+    formData.append("gender", values.gender ?? "");
+    formData.append("job", values.job ?? "");
+    formData.append("fullname", values.fullname ?? "");
+
+    await api.patch(`users/${user._id}`, {
+      body: formData,
+      credentials: "include",
+    });
+
+    loadCurrentUserData();
   };
 
   return (
     <>
       <header className="m-10">
-        <div>
+        <div className="flex items-center gap-5">
           <a href="http://localhost:5173/profile">
             <img src="../img/arrow.svg" />
           </a>
@@ -33,151 +120,197 @@ const EditProfile = () => {
       </header>
       <main className="flex flex-col items-center gap-6 mt-10 font-bold">
         <Form {...form}>
-          <FormField
-            control={form.control}
-            name="profilepicture"
-            render={({ field }) => (
-              <FormItem>
-                <Avatar className="w-40 h-40 border">
-                  <AvatarImage src={user.profilePictureUrl} />
-                  <AvatarFallback>{user.username}</AvatarFallback>
-                </Avatar>
-                <img
-                  src="../img/profile-edit.svg"
-                  className="z-10 absolute top-[16rem] left-[60%] sm:left-[54%] sm:top-[40%]"
-                  onClick={handleClick}
-                />
-                <FormControl>
-                  <Input
-                    {...field}
-                    type="file"
-                    ref={hiddenFileInput}
-                    className="hidden"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="username"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Input
-                    {...field}
-                    defaultValue={user.username}
-                    className="min-w-[300px] bg-black-50 border-none"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="bio"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Input
-                    {...field}
-                    defaultValue={user.bio}
-                    className="min-w-[300px] bg-black-50 border-none"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="birthdate"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Input
-                    {...field}
-                    defaultValue="12/27/1995"
-                    className="min-w-[300px] bg-black-50 border-none"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Input
-                    {...field}
-                    defaultValue={user.email}
-                    className="min-w-[300px] bg-black-50 border-none"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="phone"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Input
-                    {...field}
-                    defaultValue="+1 111 467 378 399"
-                    className="min-w-[300px] bg-black-50 border-none"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="gender"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Input
-                    {...field}
-                    defaultValue="Male"
-                    className="min-w-[300px] bg-black-50 border-none"
-                    type="select"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="webste"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Input
-                    {...field}
-                    defaultValue="https://www.google.com"
-                    className="min-w-[300px] bg-black-50 border-none"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button
-            type="submit"
-            className="bg-primary-500 rounded-3xl min-w-[300px] mb-6"
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="flex flex-col items-center gap-6 font-bold"
           >
-            Submit
-          </Button>
+            <FormField
+              control={form.control}
+              name="profilepicture"
+              render={() => (
+                <FormItem>
+                  <Avatar className="w-40 h-40 border">
+                    <AvatarImage
+                      src={user.profilePictureUrl}
+                      className="w-full h-full object-cover"
+                    />
+                    <AvatarFallback>{user.username}</AvatarFallback>
+                  </Avatar>
+                  <img
+                    src="../img/profile-edit.svg"
+                    className="z-10 absolute top-[15rem] left-[60%] sm:left-[54%] sm:top-[16.5rem]"
+                    onClick={handleClick}
+                  />
+                  <FormControl>
+                    <Input
+                      type="file"
+                      ref={hiddenFileInput}
+                      accept="image/*"
+                      className="hidden"
+                      onChange={handleChange}
+                      {...fileRef}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="fullname"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      className="min-w-[300px] bg-black-50 border-none"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="username"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      className="min-w-[300px] bg-black-50 border-none"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="job"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      className="min-w-[300px] bg-black-50 border-none"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="bio"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      className="min-w-[300px] bg-black-50 border-none"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="birthdate"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      type="date"
+                      className="min-w-[300px] bg-black-50 border-none"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      className="min-w-[300px] bg-black-50 border-none"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="phone"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      type="tel"
+                      className="min-w-[300px] bg-black-50 border-none"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="gender"
+              render={({ field }) => (
+                <FormItem>
+                  <Select onValueChange={field.onChange}>
+                    <FormControl className="min-w-[300px] bg-black-50 border-none">
+                      <SelectTrigger>
+                        <SelectValue
+                          placeholder={
+                            user.gender.charAt(0).toUpperCase() +
+                            user.gender.slice(1)
+                          }
+                        />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent className="min-w-[300px] bg-black-50 border-none font-semibold">
+                      <SelectItem value="male">Male</SelectItem>
+                      <SelectItem value="female">Female</SelectItem>
+                      <SelectItem value="other">Other</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="website"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      type="url"
+                      className="min-w-[300px] bg-black-50 border-none"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button
+              type="submit"
+              className="bg-primary-500 sm:bg-primary-100 rounded-3xl min-w-[300px] mb-6 "
+            >
+              Submit
+            </Button>
+          </form>
         </Form>
       </main>
     </>

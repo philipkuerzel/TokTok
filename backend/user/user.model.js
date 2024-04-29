@@ -33,6 +33,21 @@ const userSchema = new Schema({
     default:
       "https://www.shutterstock.com/image-vector/default-avatar-profile-icon-social-600nw-1677509740.jpg",
   },
+  website: {
+    type: String,
+  },
+  phone: {
+    type: String,
+  },
+  gender: {
+    type: String,
+  },
+  birthdate: {
+    type: String,
+  },
+  fullname: {
+    type: String,
+  },
 });
 
 export const User = mongoose.model("User", userSchema);

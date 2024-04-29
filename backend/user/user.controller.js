@@ -47,14 +47,32 @@ export const getCurrentUserDetails = async (req, res) => {
 
 export const updateUserDetails = async (req, res) => {
   const { id } = req.params;
-  const { username, email, bio } = req.body;
-  const response = await uploadImage(req.file.buffer);
-  const profilePictureUrl = response.secure_url;
-  const user = await User.findByIdAndUpdate(
-    { _id: id },
-    { username, email, bio, profilePictureUrl },
-    { new: true }
-  );
+  const updates = {};
+  const fieldsToUpdate = [
+    "username",
+    "email",
+    "bio",
+    "gender",
+    "phone",
+    "website",
+    "birthdate",
+    "job",
+  ];
+
+  fieldsToUpdate.forEach((field) => {
+    if (req.body[field]) {
+      updates[field] = req.body[field];
+    }
+  });
+
+  if (req.file) {
+    const response = await uploadImage(req.file.buffer);
+    updates.profilePictureUrl = response.secure_url;
+  }
+
+  const user = await User.findByIdAndUpdate({ _id: id }, updates, {
+    new: true,
+  });
   if (!user) res.status(401).json({ message: "User not found" });
   res.json(user);
 };

@@ -4,7 +4,7 @@ import Register from "./pages/Register";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import { useEffect } from "react";
-import { useStore } from "@/zustand";
+import { Fulldata, UserData, useStore } from "@/zustand";
 import EditProfile from "./pages/EditProfile";
 
 function App() {
