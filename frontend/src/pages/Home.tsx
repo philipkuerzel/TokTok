@@ -1,7 +1,7 @@
 import { useStore } from "@/zustand";
 import Feed from "@/components/Feed";
 import SplashScreen from "@/components/SplashScreen";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import TabBar from "@/components/TabBar";
 import {
   DropdownMenu,

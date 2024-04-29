@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { Fulldata, UserData, useStore } from "@/zustand";
 import EditProfile from "./pages/EditProfile";
 import SplashScreen from "./components/SplashScreen";
+import Search from "./pages/Search";
 
 function App() {
   const { user, loadCurrentUserData } = useStore() as Fulldata & UserData;
@@ -27,6 +28,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/edit-profile/:userId" element={<EditProfile />} />
+        <Route path="/search" element={<Search />} />
         <Route path="*" element={<div>404</div>} />
       </Routes>
     </>

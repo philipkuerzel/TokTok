@@ -31,7 +31,10 @@ export const getUserDetails = async (req, res) => {
   console.dir(req.user);
   const { id } = req.params;
   const user = await User.findById(id).lean();
-  if (!user) res.status(401).json({ message: "User not found" });
+  if (!user) {
+   res.status(401).json({ message: "User not found" });
+   return
+  } 
   res.json([user]);
 };
 
@@ -55,7 +58,10 @@ export const updateUserDetails = async (req, res) => {
     { username, email, bio, profilePictureUrl },
     { new: true }
   );
-  if (!user) res.status(401).json({ message: "User not found" });
+  if (!user) {
+    res.status(401).json({ message: "User not found" });
+    return
+  }
   res.json(user);
 };
 
@@ -71,7 +77,10 @@ export const setFollow = async (req, res) => {
     { _id: follower.id },
     { $push: { following: followId } }
   );
-  if (!updateFollowers || !updateFollowing) res.status(401).json();
+  if (!updateFollowers || !updateFollowing) {
+    res.status(401).json();
+    return
+  } 
   res.json(updateFollowers, updateFollowing);
 };
 
@@ -87,6 +96,10 @@ export const deleteFollow = async (req, res) => {
     { _id: follower.id },
     { $pull: { following: followId } }
   );
-  if (!updateFollowers || !updateFollowing) res.status(401).json();
+  if (!updateFollowers || !updateFollowing) {
+    res.status(401).json()
+    return
+  };
   res.json(updateFollowers, updateFollowing);
 };
+
