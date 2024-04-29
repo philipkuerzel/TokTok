@@ -14,12 +14,12 @@ import {
 import { Switch } from "@/components/ui/switch";
 
 const Home = () => {
-  const navigate = useNavigate();
-  const { logout } = useStore() as { logout: () => void };
-  const handleLogout = async () => {
-    logout();
-    navigate("/login");
-  };
+  // const navigate = useNavigate();
+  // const { logout } = useStore() as { logout: () => void };
+  // const handleLogout = async () => {
+  //   logout();
+  //   navigate("/login");
+  // };
   return (
     <>
       {/* <button onClick={handleLogout}>Logout</button>

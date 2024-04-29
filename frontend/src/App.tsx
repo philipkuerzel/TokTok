@@ -21,8 +21,8 @@ function App() {
   return (
     <>
       <Routes>
+        <Route path="/" element={<SplashScreen/>} />
         <Route path="/feed" element={<Home />} />
-        <Route path="/" element={<SplashScreen/>}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<Profile />} />
