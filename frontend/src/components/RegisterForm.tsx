@@ -65,10 +65,10 @@ const RegisterForm = () => {
 							<img />
 						</div>
 					</div>
-					<div className="w-[380px] h-[55px] px-4 py-[18px] bg-rose-400 rounded-[100px] justify-center items-center gap-2.5 inline-flex">
+					<div className="w-[380px] h-[55px] px-4 py-[18px] bg-primary-500 rounded-[100px] justify-center items-center gap-2.5 inline-flex">
 						<button
 							type="submit"
-							className="grow shrink basis-0 text-center text-white text-base font-bold font-['Urbanist'] leading-snug tracking-tight"
+							className="grow shrink basis-0 text-center text-primary-50 text-base font-bold font-['Urbanist'] leading-snug tracking-tight"
 						>
 							Sign up
 						</button>
@@ -81,7 +81,7 @@ const RegisterForm = () => {
 				</div>
 				<Link
 					to="/login"
-					className="text-rose-500 text-sm font-semibold font-['Urbanist'] leading-tight tracking-tight"
+					className="text-primary-500 text-sm font-semibold font-['Urbanist'] leading-tight tracking-tight"
 				>
 					Sign in
 				</Link>
