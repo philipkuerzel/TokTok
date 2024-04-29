@@ -11,6 +11,7 @@ const Home = () => {
     <>
       <button onClick={handleLogout}>Logout</button>
       <a href="/profile">Profile</a>
+      {/* <a href="/search">Search</a> */}
       <Feed />
     </>
   );

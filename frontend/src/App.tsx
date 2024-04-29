@@ -4,8 +4,10 @@ import Register from "./pages/Register";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import { useEffect } from "react";
-import { useStore } from "@/zustand";
+import { Fulldata, UserData, useStore } from "@/zustand";
 import EditProfile from "./pages/EditProfile";
+// import Search from "./pages/Search";
+
 
 function App() {
   const { user, loadCurrentUserData } = useStore() as Fulldata & UserData;
@@ -21,6 +23,7 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<Home />} />
+        {/* <Route path="/search" element={<Search/>}/> */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<Profile />} />
