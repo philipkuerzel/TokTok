@@ -15,7 +15,7 @@ const LoginForm = () => {
     const inputData = new FormData(form);
 
     try {
-      await api.post("http://localhost:3000/auth/login", {
+      await api.post("auth/login", {
         body: inputData,
         credentials: "include",
       });

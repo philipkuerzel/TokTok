@@ -1,4 +1,5 @@
 import { useStore } from "@/zustand";
+import Feed from "@/components/Feed";
 
 const Home = () => {
   const { logout } = useStore() as { logout: () => void };
@@ -8,9 +9,9 @@ const Home = () => {
   };
   return (
     <>
-      <div>Home</div>
       <button onClick={handleLogout}>Logout</button>
       <a href="/profile">Profile</a>
+      <Feed />
     </>
   );
 };
