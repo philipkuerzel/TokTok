@@ -1,42 +1,39 @@
-import { getAllUsers } from "@/lib/api";
+import { getAllUsers} from "@/lib/api";
 import { useEffect, useState } from "react";
 
 const SearchFunc = () => {
 	const [searchItem, setSearchItem] = useState("");
 	const [filteredUsers, setFilteredUsers] = useState([]);
-  const [users, setUsers] = useState([]);
- 
+	const [users, setUsers] = useState([]);
+
 	const showUsers = async () => {
 		const fetchedUsers = await getAllUsers();
 		setUsers(fetchedUsers as []);
-    setFilteredUsers(fetchedUsers as []);
+		setFilteredUsers(fetchedUsers as []);
 	};
 
 	useEffect(() => {
 		showUsers();
 	}, []);
 
-  const filterUsers = () => {
+	const filterUsers = () => {
 		if (!searchItem.trim()) {
 			setFilteredUsers(users);
 		} else {
-			const filtered = users.filter(user =>
+			const filtered = users.filter((user) =>
 				user.username.toLowerCase().includes(searchItem.toLowerCase())
 			);
 			setFilteredUsers(filtered);
 		}
 	};
 
-  const handleSearchInput = (e) => {
+	const handleSearchInput = (e) => {
 		setSearchItem(e.target.value);
 	};
 
-  useEffect(() => {
+	useEffect(() => {
 		filterUsers();
 	}, [searchItem, users]);
-
-
-	
 
 	return (
 		<>
@@ -64,30 +61,32 @@ const SearchFunc = () => {
 					</div>
 					{filteredUsers.map((user) => {
 						return (
-								<div key={user._id} className="w-[380px] justify-start items-center gap-3 inline-flex">
-									<div className="grow shrink basis-0 h-[60px] justify-start items-center gap-5 flex">
-										<div className="w-[60px] h-[60px] justify-center items-center flex">
-											<img
-												className="w-[60px] h-[60px] rounded-full"
-												src={user?.profilePictureUrl}
-											/>
-										</div>
-										<div className="grow shrink basis-0 flex-col justify-start items-start gap-1 inline-flex">
-											<div className="self-stretch text-neutral-800 text-lg font-bold font-['Urbanist'] leading-snug">
-												{user?.username}
-											</div>
-											<div className="self-stretch text-zinc-600 text-sm font-medium font-['Urbanist'] leading-tight tracking-tight">
-												{user?.job}
-											</div>
-										</div>
+							<div
+								key={user._id}
+								className="w-[380px] justify-start items-center gap-3 inline-flex"
+							>
+								<div className="grow shrink basis-0 h-[60px] justify-start items-center gap-5 flex">
+									<div className="w-[60px] h-[60px] justify-center items-center flex">
+										<img
+											className="w-[60px] h-[60px] rounded-full"
+											src={user?.profilePictureUrl}
+										/>
 									</div>
-									<div className="px-4 py-1.5 bg-primary-500 rounded-[100px] justify-center items-center gap-1 flex">
-										<button className="text-center text-primary-50 text-sm font-semibold font-['Urbanist'] leading-tight tracking-tight">
-											Follow
-										</button>
+									<div className="grow shrink basis-0 flex-col justify-start items-start gap-1 inline-flex">
+										<div className="self-stretch text-neutral-800 text-lg font-bold font-['Urbanist'] leading-snug">
+											{user?.username}
+										</div>
+										<div className="self-stretch text-zinc-600 text-sm font-medium font-['Urbanist'] leading-tight tracking-tight">
+											{user?.job}
+										</div>
 									</div>
 								</div>
-							
+								<div className="px-4 py-1.5 bg-primary-500 rounded-[100px] justify-center items-center gap-1 flex">
+									<button className="text-center text-primary-50 text-sm font-semibold font-['Urbanist'] leading-tight tracking-tight">
+										{user.following ? "unfollow" : "follow"}
+									</button>
+								</div>
+							</div>
 						);
 					})}
 				</div>
