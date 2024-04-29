@@ -3,8 +3,8 @@ import { getFeed } from "@/lib/api";
 import FeedCard from "./FeedCard";
 const Feed = () => {
   const [posts, setPosts] = useState([]);
-  const refreshPage = () => {
-    getFeed().then((json) => {
+  const refreshPage = async () => {
+    await getFeed().then((json) => {
       setPosts(json);
     });
   };

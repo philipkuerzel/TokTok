@@ -12,14 +12,21 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Switch } from "@/components/ui/switch";
+import "../components/animations.css";
+import { useState } from "react";
 
 const Home = () => {
-  // const navigate = useNavigate();
-  // const { logout } = useStore() as { logout: () => void };
-  // const handleLogout = async () => {
-  //   logout();
-  //   navigate("/login");
-  // };
+  const [isClicked, setIsClicked] = useState(false);
+  const rotate = () => {
+    console.log("rotate");
+    setIsClicked(!isClicked);
+  };
+  const navigate = useNavigate();
+  const { logout } = useStore() as { logout: () => void };
+  const handleLogout = async () => {
+    logout();
+    navigate("/login");
+  };
   return (
     <>
       {/* <button onClick={handleLogout}>Logout</button>
@@ -45,6 +52,8 @@ const Home = () => {
               <DropdownMenuItem>
                 <Switch className="m-2" />
               </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
