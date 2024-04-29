@@ -21,7 +21,7 @@ const LoginForm = () => {
       });
       await loadCurrentUserData();
 
-      navigate("/");
+      navigate("/feed");
     } catch (error) {
       setError(true);
       console.log(error);
