@@ -22,7 +22,7 @@ function App() {
 
   return (
     <>
-      <ThemeProvider defaultTheme="dark">
+      <ThemeProvider defaultTheme="system">
         <Routes>
           <Route path="/" element={<SplashScreen />} />
           <Route path="/feed" element={<Home />} />
