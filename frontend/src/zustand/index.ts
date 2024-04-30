@@ -40,6 +40,10 @@ export interface Fulldata {
   passwordHash: string;
   userDataFull: Fulldata;
   getUserdataFull: (id: string) => void;
+  job: string;
+  birthdate: string;
+  url: string;
+  gender: string;
 }
 
 export const useStore = create(
