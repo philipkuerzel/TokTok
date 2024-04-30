@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import "./tabBar.css";
 
@@ -19,7 +19,7 @@ const TabBar = () => {
   }, []);
 
   return (
-    <div className={`tabBar ${isVisible ? "" : "hide"}`}>
+    <div className={`tabBar dark:bg-black ${isVisible ? "" : "hide"}`}>
       <NavLink
         to="/feed"
         isActive={(match, location) => location.pathname === "/feed"}

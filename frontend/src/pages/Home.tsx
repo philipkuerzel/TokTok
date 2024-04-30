@@ -14,6 +14,7 @@ import {
 import { Switch } from "@/components/ui/switch";
 import "../components/animations.css";
 import { useState } from "react";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const Home = () => {
   const [isClicked, setIsClicked] = useState(false);
@@ -50,6 +51,7 @@ const Home = () => {
               <DropdownMenuSeparator />
               <DropdownMenuLabel>Dark Mode</DropdownMenuLabel>
               <DropdownMenuItem>
+                <ThemeToggle />
                 <Switch className="m-2" />
               </DropdownMenuItem>
               <DropdownMenuSeparator />

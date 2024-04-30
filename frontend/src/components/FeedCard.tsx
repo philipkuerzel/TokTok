@@ -4,8 +4,10 @@ import FeedHeader from "./FeedHeader";
 import { useStore } from "@/zustand";
 import { Fulldata, UserData } from "@/zustand";
 import "./animations.css";
+import { Skeleton } from "./ui/skeleton";
 
 const FeedCard = ({ post, refresh }) => {
+  const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState();
   const { user } = useStore() as Fulldata & UserData;
   const [isLiked, setIsLiked] = useState(post.likes.includes(user[0]?._id));
@@ -24,6 +26,31 @@ const FeedCard = ({ post, refresh }) => {
     refresh();
   };
 
+  setTimeout(() => {
+    setLoading(false);
+  }, 2000);
+
+  if (loading) {
+    return (
+      <div>
+        <div className="flex items-center space-x-4">
+          <Skeleton className="h-12 w-12 rounded-full" />
+          <div className="space-y-2">
+            <Skeleton className="h-4 w-[250px]" />
+            <Skeleton className="h-4 w-[200px]" />
+          </div>
+        </div>
+        <div className="flex flex-col space-y-3">
+          <Skeleton className="h-[250px] w-full rounded-xl" />
+          <div className="space-y-2">
+            <Skeleton className="h-4 w-[250px]" />
+            <Skeleton className="h-4 w-[200px]" />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
       <section className="m-3">
@@ -34,7 +61,11 @@ const FeedCard = ({ post, refresh }) => {
             </div>
           );
         })}
-        <img className=" min-w-full rounded-3xl" src={post.imageUrl} alt="" />
+        <img
+          className=" min-w-full rounded-3xl aspect-square object-cover"
+          src={post.imageUrl}
+          alt=""
+        />
         <div className="m-3 flex">
           <div className="flex m-3">
             <button onClick={handleLike}>

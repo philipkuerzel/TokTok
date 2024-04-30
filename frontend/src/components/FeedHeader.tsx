@@ -8,11 +8,16 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Skeleton } from "./ui/skeleton";
+import { useState } from "react";
 
 const FeedHeader = ({ profile }) => {
-  if (!profile) {
-    return <Skeleton className="w-[100px] h-[20px] rounded-full" />;
-  }
+  // const [loading, setLoading] = useState(true);
+  // setTimeout(() => {
+  //   setLoading(false);
+  // }, 1000);
+  // if (loading) {
+  //   return <Skeleton />;
+  // }
   return (
     <>
       <div className="flex m-4 justify-between">

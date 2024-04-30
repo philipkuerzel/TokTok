@@ -8,6 +8,7 @@ import { Fulldata, UserData, useStore } from "@/zustand";
 import EditProfile from "./pages/EditProfile";
 import SplashScreen from "./components/SplashScreen";
 import Search from "./pages/Search";
+import { ThemeProvider } from "./provider/ThemeProvider";
 
 function App() {
   const { user, loadCurrentUserData } = useStore() as Fulldata & UserData;
@@ -21,16 +22,18 @@ function App() {
 
   return (
     <>
-      <Routes>
-        <Route path="/" element={<SplashScreen />} />
-        <Route path="/feed" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/edit-profile/:userId" element={<EditProfile />} />
-        <Route path="/search" element={<Search />} />
-        <Route path="*" element={<div>404</div>} />
-      </Routes>
+      <ThemeProvider defaultTheme="dark">
+        <Routes>
+          <Route path="/" element={<SplashScreen />} />
+          <Route path="/feed" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/edit-profile/:userId" element={<EditProfile />} />
+          <Route path="/search" element={<Search />} />
+          <Route path="*" element={<div>404</div>} />
+        </Routes>
+      </ThemeProvider>
     </>
   );
 }
