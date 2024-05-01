@@ -1,36 +1,25 @@
-import { getAllUsers } from "@/lib/api";
-import { Fulldata, useStore, UserData } from "@/zustand";
+import { useStore, Store, AllUsers  } from "@/zustand";
 import { useEffect, useState } from "react";
 
 const SearchFunc = () => {
   const [searchItem, setSearchItem] = useState("");
-  const [filteredUsers, setFilteredUsers] = useState([]);
-  const [users, setUsers] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState<AllUsers[]>([]);
 
-  const { userDataFull } = useStore() as Fulldata;
+  const { users, user } = useStore() as Store;
 
-  const showUsers = async () => {
-    const fetchedUsers = await getAllUsers();
-    setUsers(fetchedUsers as []);
-    setFilteredUsers(fetchedUsers as []);
-  };
-
-  useEffect(() => {
-    showUsers();
-  }, []);
 
   const filterUsers = () => {
     if (!searchItem.trim()) {
-      const excludeOwnId = users.filter(
-        (user: UserData) => user._id !== userDataFull[0]._id
+      const excludeOwnId = users!.filter(
+        (ownUser) => ownUser._id !== user!._id
       );
       setFilteredUsers(excludeOwnId);
     } else {
-      const filtered = users.filter((user: UserData) =>
-        user.username.toLowerCase().includes(searchItem.toLowerCase())
+      const filtered = users!.filter((userList) =>
+        userList.username.toLowerCase().includes(searchItem.toLowerCase())
       );
-      const excludeOwnId = filtered.filter(
-        (user: UserData) => user._id !== userDataFull[0]._id
+      const excludeOwnId = filtered!.filter(
+        (ownUser) => ownUser._id !== user!._id
       );
 
       setFilteredUsers(excludeOwnId);
@@ -43,6 +32,7 @@ const SearchFunc = () => {
 
   useEffect(() => {
     filterUsers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchItem, users]);
 
   return (
@@ -69,37 +59,37 @@ const SearchFunc = () => {
               <div className="self-stretch h-1 bg-primary-500 rounded-[100px]"></div>
             </div>
           </div>
-          {filteredUsers.map((user: Fulldata) => {
-			return (
-				<div
-					key={user._id}
-					className="w-[380px] justify-start items-center gap-3 inline-flex"
-				>
-					<div className="grow shrink basis-0 h-[60px] justify-start items-center gap-5 flex">
-						<div className="w-[60px] h-[60px] justify-center items-center flex">
-							<img
-								className="w-[60px] h-[60px] rounded-full"
-								src={user?.profilePictureUrl}
-							/>
-						</div>
-						<div className="grow shrink basis-0 flex-col justify-start items-start gap-1 inline-flex">
-							<div className="self-stretch text-neutral-800 text-lg font-bold font-['Urbanist'] leading-snug">
-								{user?.username}
-							</div>
-							<div className="self-stretch text-zinc-600 text-sm font-medium font-['Urbanist'] leading-tight tracking-tight">
-								{user?.job}
-							</div>
-						</div>
-					</div>
-					<div className="px-4 py-1.5 bg-primary-500 rounded-[100px] justify-center items-center gap-1 flex">
-						<button className="text-center text-primary-50 text-sm font-semibold font-['Urbanist'] leading-tight tracking-tight">
-							{user.followers.includes(userDataFull[0]?._id as string)
-								? "Unfollow"
-								: "Follow"}
-						</button>
-					</div>
-				</div>
-			);
+          {filteredUsers.map((user) => {
+            return (
+              <div
+                key={user._id}
+                className="w-[380px] justify-start items-center gap-3 inline-flex"
+              >
+                <div className="grow shrink basis-0 h-[60px] justify-start items-center gap-5 flex">
+                  <div className="w-[60px] h-[60px] justify-center items-center flex">
+                    <img
+                      className="w-[60px] h-[60px] rounded-full"
+                      src={user?.profilePictureUrl}
+                    />
+                  </div>
+                  <div className="grow shrink basis-0 flex-col justify-start items-start gap-1 inline-flex">
+                    <div className="self-stretch text-neutral-800 text-lg font-bold font-['Urbanist'] leading-snug">
+                      {user?.username}
+                    </div>
+                    <div className="self-stretch text-zinc-600 text-sm font-medium font-['Urbanist'] leading-tight tracking-tight">
+                      {user?.job}
+                    </div>
+                  </div>
+                </div>
+                <div className="px-4 py-1.5 bg-primary-500 rounded-[100px] justify-center items-center gap-1 flex">
+                  <button className="text-center text-primary-50 text-sm font-semibold font-['Urbanist'] leading-tight tracking-tight">
+                    {user.followers!.includes(user!._id)
+                      ? "Unfollow"
+                      : "Follow"}
+                  </button>
+                </div>
+              </div>
+            );
           })}
         </div>
       </div>

@@ -1,6 +1,5 @@
 import { useStore } from "@/zustand";
 import Feed from "@/components/Feed";
-import SplashScreen from "@/components/SplashScreen";
 import { useNavigate } from "react-router-dom";
 import TabBar from "@/components/TabBar";
 import {
@@ -13,14 +12,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Switch } from "@/components/ui/switch";
 import "../components/animations.css";
-import { useState } from "react";
 
 const Home = () => {
-  const [isClicked, setIsClicked] = useState(false);
-  const rotate = () => {
-    console.log("rotate");
-    setIsClicked(!isClicked);
-  };
   const navigate = useNavigate();
   const { logout } = useStore() as { logout: () => void };
   const handleLogout = async () => {

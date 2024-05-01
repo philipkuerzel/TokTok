@@ -4,13 +4,14 @@ import Register from "./pages/Register";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import { useEffect } from "react";
-import { Fulldata, UserData, useStore } from "@/zustand";
+import { Store, useStore } from "@/zustand";
 import EditProfile from "./pages/EditProfile";
 import SplashScreen from "./components/SplashScreen";
 import Search from "./pages/Search";
 
 function App() {
-  const { user, loadCurrentUserData } = useStore() as Fulldata & UserData;
+  const { user, loadCurrentUserData, logout } = useStore() as Store;
+
   const navigate = useNavigate();
   useEffect(() => {
     if (!user) {
@@ -29,7 +30,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/edit-profile/:userId" element={<EditProfile />} />
         <Route path="/search" element={<Search />} />
-        <Route path="*" element={<div>404</div>} />
+        <Route path="*" element={<button onClick={logout}>404</button>} />
       </Routes>
     </>
   );
