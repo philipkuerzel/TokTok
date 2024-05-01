@@ -1,19 +1,32 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "./ui/button";
-import { addComment } from "@/lib/api";
 import { useRef } from "react";
+import { api } from "@/lib/api";
 const AddCommentForm = ({ postId, userId }) => {
-  console.log(postId);
-  console.log(userId);
-  const comment = useRef();
-  const handleSubmit = (e) => {
+  const commentRef = useRef();
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    addComment(postId, userId).then((json) => {});
+    try {
+      const content = await api
+        .post(`posts/${postId}/${userId}`, {
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ content: commentRef.current.value }),
+        })
+        .json();
+    } catch (error) {
+      console.error(error);
+    }
   };
   return (
     <>
       <div className="flex w-full max-w-sm items-center space-x-2">
-        <Input ref={comment} type="content" placeholder="comment here" />
+        <Input
+          name="content"
+          ref={commentRef}
+          type="text"
+          placeholder="comment here"
+        />
         <Button onClick={handleSubmit} type="button">
           comment
         </Button>

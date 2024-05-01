@@ -14,5 +14,3 @@ export const getSinglePost = (id) =>
   api.get(`posts/${id}`, { credentials: "include" }).json();
 export const getComments = (id) =>
   api.get(`posts/${id}/comments`, { credentials: "include" }).json();
-export const addComment = (postId, userId) =>
-  api.post(`posts/${postId}/${userId}`, { credentials: "include" }).json();
