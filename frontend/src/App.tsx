@@ -4,7 +4,7 @@ import Register from "./pages/Register";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import { useEffect } from "react";
-import { Store, useStore } from "@/zustand";
+import { Store, useStore} from "@/zustand";
 import EditProfile from "./pages/EditProfile";
 import SplashScreen from "./components/SplashScreen";
 import Search from "./pages/Search";

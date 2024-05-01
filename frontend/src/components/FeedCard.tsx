@@ -23,8 +23,6 @@ const FeedCard = ({ post }) => {
     });
   }, [post.authorId]);
 
-  console.log(author);
-
   return (
     <>
       <section className="m-3">

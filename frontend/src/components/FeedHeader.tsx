@@ -10,7 +10,6 @@ import {
 import { Skeleton } from "./ui/skeleton";
 
 const FeedHeader = ({ profile }) => {
-  console.log(profile);
   if (!profile) {
     return <Skeleton className="w-[100px] h-[20px] rounded-full" />;
   }
