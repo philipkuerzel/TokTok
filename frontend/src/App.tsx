@@ -9,6 +9,7 @@ import EditProfile from "./pages/EditProfile";
 import SplashScreen from "./components/SplashScreen";
 import Search from "./pages/Search";
 import { ThemeProvider } from "./provider/ThemeProvider";
+import SinglePost from "./pages/SinglePost";
 
 function App() {
   const { user, loadCurrentUserData } = useStore() as Fulldata & UserData;
@@ -24,6 +25,7 @@ function App() {
     <>
       <ThemeProvider defaultTheme="system">
         <Routes>
+          <Route path="/post/:postId" element={<SinglePost />} />
           <Route path="/" element={<SplashScreen />} />
           <Route path="/feed" element={<Home />} />
           <Route path="/login" element={<Login />} />
