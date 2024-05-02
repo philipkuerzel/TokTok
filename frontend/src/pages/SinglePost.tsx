@@ -14,9 +14,7 @@ const SinglePost = () => {
   const [authorDetails, setAuthorDetails] = useState([]);
   const [userData, setUserData] = useState();
   const { user } = useStore() as Fulldata & UserData;
-  const [isLiked, setIsLiked] = useState(
-    singlePost?.likes.includes(user[0]?._id)
-  );
+  const [isLiked, setIsLiked] = useState(singlePost?.likes.includes(user?._id));
   const [isClicked, setIsClicked] = useState(false);
 
   const getAuthorDetails = async (id) => {
@@ -50,12 +48,12 @@ const SinglePost = () => {
   const [animateLike, setAnimateLike] = useState(false);
   const handleLike = async () => {
     setIsClicked(!isClicked);
-    if (!singlePost?.likes.includes(user[0]?._id)) {
+    if (!singlePost?.likes.includes(user?._id)) {
       setAnimateLike(true);
       setTimeout(() => setAnimateLike(false), 1000); // Annahme: Animation dauert 1000ms
     }
     setIsLiked(!isLiked);
-    await addLike(singlePost._id, user[0]._id);
+    await addLike(singlePost._id, user._id);
     refreshSinglePost(postId);
   };
 
@@ -88,7 +86,7 @@ const SinglePost = () => {
                   //       : ""
                   //   }
                   src={
-                    singlePost?.likes.includes(user[0]?._id)
+                    singlePost?.likes.includes(user?._id)
                       ? "/img/liked.svg"
                       : "/img/favorites.svg"
                   }
@@ -115,7 +113,7 @@ const SinglePost = () => {
       })}
       <AddCommentForm
         postId={singlePost?._id}
-        userId={user[0]?._id}
+        userId={user?._id}
         refresh={refreshSinglePost}
       />
     </>

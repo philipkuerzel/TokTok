@@ -5,7 +5,6 @@ import FeedHeader from "./FeedHeader";
 const Comments = ({ commentData }) => {
   const [comments, setComments] = useState();
   const [author, setAuthor] = useState();
-  console.log(author);
   const refreshComments = async () => {
     await getComments(commentData).then((json) => {
       setComments(json);
@@ -29,7 +28,7 @@ const Comments = ({ commentData }) => {
   }, [comments]);
   return (
     <>
-      <FeedHeader profile={author[0]} />
+      {author ? <FeedHeader profile={author[0]} /> : null}
       <p>{comments?.content}</p>
     </>
   );

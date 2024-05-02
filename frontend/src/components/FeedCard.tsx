@@ -3,6 +3,7 @@ import { useState } from "react";
 import FeedHeader from "./FeedHeader";
 import { Store, useStore, Post } from "@/zustand";
 import "./animations.css";
+import { useNavigate } from "react-router-dom";
 
 const FeedCard = ({ post }: { post: Post }) => {
   const { user, loadCurrentUserData } = useStore() as Store;
