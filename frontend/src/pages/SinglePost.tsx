@@ -3,7 +3,7 @@ import Comments from "@/components/Comments";
 import FeedCard from "@/components/FeedCard";
 import FeedHeader from "@/components/FeedHeader";
 import { addLike, getSinglePost, getUserData } from "@/lib/api";
-import { useStore } from "@/zustand";
+import { Store, useStore } from "@/zustand";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
@@ -13,7 +13,7 @@ const SinglePost = () => {
   const [singlePost, setSinglePost] = useState();
   const [authorDetails, setAuthorDetails] = useState([]);
   const [userData, setUserData] = useState();
-  const { user } = useStore() as Fulldata & UserData;
+  const { user } = useStore() as Store;
   const [isLiked, setIsLiked] = useState(singlePost?.likes.includes(user?._id));
   const [isClicked, setIsClicked] = useState(false);
 
@@ -53,7 +53,7 @@ const SinglePost = () => {
       setTimeout(() => setAnimateLike(false), 1000); // Annahme: Animation dauert 1000ms
     }
     setIsLiked(!isLiked);
-    await addLike(singlePost._id, user._id);
+    await addLike(singlePost!._id, user._id);
     refreshSinglePost(postId);
   };
 
@@ -106,7 +106,7 @@ const SinglePost = () => {
       </main>
       {singlePost?.comments.map((comment) => {
         return (
-          <div key={comment._id}>
+          <div className=" " key={comment._id}>
             <Comments commentData={comment} />
           </div>
         );

@@ -5,7 +5,6 @@ import { uploadImage } from "../utils/uploadImage.js";
 
 export const getPosts = async (req, res) => {
   const posts = await Post.find().sort({ date: -1 }).populate("authorId")
-  console.log(posts);
   res.json(posts);
 };
 

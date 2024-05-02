@@ -4,7 +4,6 @@ import jwt from "jsonwebtoken";
 
 export const userLogin = async (req, res) => {
   const { email, password, } = req.body;
-  console.log('schwachsinn:', req.body);
   if (!email || !password) {
     res.sendStatus(400);
     return;
@@ -24,11 +23,15 @@ export const userLogin = async (req, res) => {
     { username: user.username, email, userId: user._id},
     process.env.JWT_SECRET
   );
-  res.cookie("token", token);
+  res.cookie("token", token,{
+    httpOnly: true,
+    sameSite:"none",
+    secure:true
+  });
   res.json({ status: "ok" });
 };
 
-export const userLogout = (req, res) => {
+export const userLogout = async (req, res) => {
   res.clearCookie("token");
   res.end();
 };

@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 const FeedCard = ({ post }: { post: Post }) => {
   const { user, loadCurrentUserData } = useStore() as Store;
+  if (!user) return null;
   const [isLiked, setIsLiked] = useState(post.likes.includes(user!._id));
   const [isClicked, setIsClicked] = useState(false);
 

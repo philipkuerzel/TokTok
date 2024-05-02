@@ -65,7 +65,7 @@ const SearchFunc = () => {
             <div className="grow shrink basis-0 flex-col justify-start items-center gap-3 inline-flex">
               <div className="self-stretch justify-center items-center gap-2 inline-flex">
                 <div className="w-6 h-6 px-1 py-0.5 justify-center items-center flex">
-                  <img className="w-4 h-5" src="../img/Group.jpg" />
+                  <img className="w-4 h-5" src="../img/Group.svg" />
                 </div>
               </div>
               <div className="self-stretch h-1 bg-primary-500 rounded-[100px]"></div>
@@ -105,7 +105,7 @@ const SearchFunc = () => {
                     onClick={() => handleFollow(filteredUser._id, isFollowing)}
                     className={`text-center text-sm font-medium font-['Urbanist'] leading-tight tracking-tight `}
                   >
-                    {isFollowing ? "Unfollow" : "Follow"}
+                    {isFollowing ? "Following" : "Follow"}
                   </button>
                 </div>
               </div>
