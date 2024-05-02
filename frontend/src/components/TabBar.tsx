@@ -19,7 +19,7 @@ const TabBar = () => {
   }, []);
 
   return (
-    <div className={`tabBar ${isVisible ? "" : "hide"}`}>
+    <div className={`tabBar dark:bg-black-99 ${isVisible ? "" : "hide"}`}>
       <NavLink to="/feed">
         <button className="noStyleBtn">
           <img
