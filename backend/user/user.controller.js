@@ -1,3 +1,4 @@
+import { mail } from "../utils/mail.js";
 import { uploadImage } from "../utils/uploadImage.js";
 import { User } from "./user.model.js";
 import bcrypt from "bcrypt";
@@ -17,12 +18,23 @@ export const registerUser = async (req, res) => {
     if (user) {
       res.status(401).json({ message: "User already exists" });
     } else {
+      const verificationCode = crypto.randomInt(100000, 999999)
       const newUser = await User.create({
         username,
         passwordHash,
         email,
+        verificationCode,
       });
       res.status(201).json(newUser);
+
+      // const emailResult = await mail.sendMail({
+      //   from: '"Test" <test@toktok.de>',
+        
+      //   to: email,
+      //   subject: "Registration erfolgreich!",
+      //   text: `Danke für deine Registrierung, ${username}. Klicke hier um zu bestaetigen. Dies ist dein Verification Code: ${verificationCode}`,
+      //   html: `<p>Danke für deine Registrierung, <b>${username}</b>.</p> <p>Klicke hier um zu bestaetigen. Dies ist dein Verification Code: ${verificationCode}</p>`,
+      // });
     }
   }
 };
@@ -82,38 +94,43 @@ export const updateUserDetails = async (req, res) => {
 
 export const setFollow = async (req, res) => {
   const { id } = req.params;
-  const { followId } = req.body;
-  const follower = await User.findById(id);
+  const  {userId}  = req.user;
+  const follower = await User.findById(userId);
   const updateFollowers = await User.findByIdAndUpdate(
-    { _id: followId },
-    { $push: { followers: follower.id } }
+    { _id: id },
+    { $push: { followers: follower._id } },
+    { new: true }
   );
   const updateFollowing = await User.findByIdAndUpdate(
-    { _id: follower.id },
-    { $push: { following: followId } }
+    { _id: follower._id },
+    { $push: { following: id } },
+    { new: true }
   );
+  console.log('UFollowing', updateFollowing);
   if (!updateFollowers || !updateFollowing) {
     res.status(401).json();
     return;
   }
-  res.json(updateFollowers, updateFollowing);
+  res.json({updateFollowers: updateFollowers, updateFollowing:updateFollowing});
+  
 };
 
 export const deleteFollow = async (req, res) => {
   const { id } = req.params;
-  const { followId } = req.body;
-  const follower = await User.findById(id);
+  const { userId } = req.user;
+  const follower = await User.findById(userId);
   const updateFollowers = await User.findByIdAndUpdate(
-    { _id: followId },
-    { $pull: { followers: follower.id } }
-  );
+    { _id: id },
+    { $pull: { followers: follower._id } }
+    );
   const updateFollowing = await User.findByIdAndUpdate(
-    { _id: follower.id },
-    { $pull: { following: followId } }
+    { _id: follower._id },
+    { $pull: { following: id } }
   );
+  console.log('UFollowing', updateFollowing);
   if (!updateFollowers || !updateFollowing) {
     res.status(401).json();
     return;
   }
-  res.json(updateFollowers, updateFollowing);
+  res.json({updateFollowers:updateFollowers, updateFollowing:updateFollowing});
 };

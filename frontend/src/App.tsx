@@ -14,7 +14,7 @@ function App() {
   const { user, loadCurrentUserData } = useStore() as Fulldata & UserData;
   const navigate = useNavigate();
   useEffect(() => {
-    if (!user) {
+    if (!user && window.location.pathname !== "/register") {
       navigate("/login");
     }
     loadCurrentUserData();

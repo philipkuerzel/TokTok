@@ -20,6 +20,6 @@ router.get("/:id", checkAuth, getUserDetails);
 router.post("/register", mult.none(), registerUser);
 router.patch("/:id", [mult.single("image"), checkAuth], updateUserDetails);
 router.post("/:id/follow", checkAuth, setFollow);
-router.delete("/:id/unfollow", checkAuth, deleteFollow);
+router.post("/:id/unfollow", checkAuth, deleteFollow);
 
 export default router;
