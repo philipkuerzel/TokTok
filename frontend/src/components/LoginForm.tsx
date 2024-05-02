@@ -1,12 +1,12 @@
 import { api } from "@/lib/api";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { UserData, useStore } from "@/zustand";
+import { Store, useStore } from "@/zustand";
 
 const LoginForm = () => {
   const navigate = useNavigate();
 
-  const { loadCurrentUserData } = useStore() as UserData;
+  const { loadCurrentUserData } = useStore() as Store;
   const [, setError] = useState(false);
 
   const sendFormData = async (event) => {

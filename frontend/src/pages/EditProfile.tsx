@@ -15,7 +15,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { Fulldata, UserData, useStore } from "@/zustand";
+import { Store, useStore } from "@/zustand";
 import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -23,9 +23,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { api } from "@/lib/api";
 
 const EditProfile = () => {
-  const { userDataFull, loadCurrentUserData } = useStore() as Fulldata &
-    UserData;
-  const user = userDataFull[0];
+  const { user, loadCurrentUserData } = useStore() as Store
   const hiddenFileInput = useRef<HTMLInputElement>(null);
   const handleClick = () => {
     hiddenFileInput.current?.click();
@@ -74,15 +72,15 @@ const EditProfile = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: user.username,
-      bio: user.bio,
-      birthdate: user.birthdate,
-      email: user.email,
-      phone: user.phone,
-      website: user.website,
-      gender: user.gender,
-      job: user.job,
-      fullname: user.fullname,
+      username: user!.username,
+      bio: user!.bio,
+      birthdate: user!.birthdate,
+      email: user!.email,
+      phone: user!.phone,
+      website: user!.website,
+      gender: user!.gender,
+      job: user!.job,
+      fullname: user!.fullname,
     },
   });
 
@@ -100,7 +98,7 @@ const EditProfile = () => {
     formData.append("job", values.job ?? "");
     formData.append("fullname", values.fullname ?? "");
 
-    await api.patch(`users/${user._id}`, {
+    await api.patch(`users/${user!._id}`, {
       body: formData,
       credentials: "include",
     });
@@ -131,10 +129,10 @@ const EditProfile = () => {
                 <FormItem>
                   <Avatar className="w-40 h-40 border">
                     <AvatarImage
-                      src={user.profilePictureUrl}
+                      src={user!.profilePictureUrl}
                       className="w-full h-full object-cover"
                     />
-                    <AvatarFallback>{user.username}</AvatarFallback>
+                    <AvatarFallback>{user!.username}</AvatarFallback>
                   </Avatar>
                   <img
                     src="../img/profile-edit.svg"
@@ -272,8 +270,8 @@ const EditProfile = () => {
                       <SelectTrigger>
                         <SelectValue
                           placeholder={
-                            user.gender.charAt(0).toUpperCase() +
-                            user.gender.slice(1)
+                            user!.gender?.charAt(0).toUpperCase() +
+                            user!.gender?.slice(1)
                           }
                         />
                       </SelectTrigger>

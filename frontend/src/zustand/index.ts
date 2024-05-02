@@ -2,92 +2,119 @@ import { create } from "zustand";
 import { api } from "@/lib/api";
 import { persist } from "zustand/middleware";
 
-export interface UserData {
-  email: string;
-  emailVerified: boolean;
-  username: string;
+export interface User {
   _id: string;
-  user: UserData;
-  loadCurrentUserData: () => void;
-}
-
-export interface Posts {
-  _id: string;
-  title: string;
-  content: string;
-  userId: string;
-  posts: [] | string[];
-  imageUrl: string;
-  caption: string;
-}
-
-export interface Comments {
-  _id: string;
-  content: string;
-  userId: string;
-  postId: string;
-}
-
-export interface Fulldata {
-  _id: string;
-  username: string;
-  email: string;
-  bio: string;
   profilePictureUrl: string;
-  followers: [] | string[];
-  following: [] | string[];
+  username: string;
+  job: string;
+  followers: string[];
+  following: string[];
   userGroup: string;
   passwordHash: string;
-  userDataFull: Fulldata;
-  getUserdataFull: (id: string) => void;
-  job: string;
+  bio: string;
+  email: string;
+  emailVerified: boolean;
   birthdate: string;
   url: string;
+  phone: string;
+  website: string;
   gender: string;
+  fullname: string;
 }
 
-export const useStore = create(
+export interface AllUsers {
+  _id: string;
+  profilePictureUrl: string;
+  username: string;
+  job: string;
+  followers: string[];
+  following: string[];
+  userGroup: string;
+  passwordHash: string;
+  bio: string;
+  email: string;
+  emailVerified: boolean;
+  birthdate: string;
+  url: string;
+  phone: string;
+}
+
+export interface Post {
+  _id: string;
+  authorId: string;
+  imageUrl: string;
+  likes: string[];
+  comments: string[];
+}
+
+export interface Comment {
+  _id: string;
+  authorId: string;
+  postId: string;
+  content: string;
+}
+
+export interface Store {
+  user: User | null;
+  posts: Post[] | null;
+  comments: Comment[] | null;
+  users: AllUsers[] | null;
+  userId: User | null;
+  getUserById: (userId: string) => Promise<User>;
+  loadCurrentUserData: () => void;
+  logout: () => void;
+}
+
+export const useStore = create<Store>()(
   persist(
     (set) => ({
       user: null,
+      posts: [],
+      comments: [],
+      users: [],
+      userId: null,
       loadCurrentUserData: async () => {
-        const data = (await api
-          .get(`users/currentUser`, {
-            credentials: "include",
-          })
-          .json()) as UserData;
-        set({ user: data });
-        const userData = (await api
-          .get(`users/${data._id}`, {
-            credentials: "include",
-          })
-          .json()) as UserData;
-        set({ user: userData });
-        const getPosts = (await api
-          .get(`posts/user/${data._id}`, {
-            credentials: "include",
-          })
-          .json()) as Posts[];
-        set({ posts: getPosts });
-        const getComments = (await api
-          .get(`comments`, {
-            credentials: "include",
-          })
-          .json()) as Comments[];
-        set({ comments: getComments });
-        const FullUserData = (await api
-          .get(`users/${data._id}`, {
-            credentials: "include",
-          })
-          .json()) as Fulldata;
-        set({ userDataFull: FullUserData });
-        return data;
+        try {
+          const currentUser = (await api
+            .get("users/currentUser", { credentials: "include" })
+            .json()) as User;
+          const [userData, userPosts, userComments, allUsers] =
+            await Promise.all([
+              api
+                .get(`users/${currentUser._id}`, { credentials: "include" })
+                .json() as Promise<User>,
+              api
+                .get(`posts`, {
+                  credentials: "include",
+                })
+                .json() as Promise<Post[]>,
+              api
+                .get(`comments`, {
+                  credentials: "include",
+                })
+                .json() as Promise<Comment[]>,
+              api.get(`users`, { credentials: "include" }).json() as Promise<
+                AllUsers[]
+              >,
+            ]);
+          set({
+            user: userData[0],
+            posts: userPosts,
+            comments: userComments,
+            users: allUsers,
+          });
+        } catch (error) {
+          console.error(error);
+        }
       },
-
+      getUserById: async (userId: string) => {
+        const user = (await api
+          .get(`users/${userId}`, { credentials: "include" })
+          .json()) as User;
+        return user[0];
+      },
       logout: async () => {
-        await api.post(`auth/logout`, {
-          credentials: "include",
-        });
+        await api.post("auth/logout", { credentials: "include" });
         set({ user: null });
       },
     }),

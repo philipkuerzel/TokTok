@@ -4,11 +4,11 @@ import "./tabBar.css";
 
 const TabBar = () => {
   const [isVisible, setIsVisible] = useState(true);
-  let lastScrollTop = 0;
 
   useEffect(() => {
     window.onscroll = function () {
-      let st = window.pageYOffset || document.documentElement.scrollTop;
+      let lastScrollTop = 0;
+      const st = window.pageYOffset || document.documentElement.scrollTop;
       if (st > lastScrollTop) {
         setIsVisible(false);
       } else {
@@ -19,11 +19,8 @@ const TabBar = () => {
   }, []);
 
   return (
-    <div className={`tabBar dark:bg-black ${isVisible ? "" : "hide"}`}>
-      <NavLink
-        to="/feed"
-        isActive={(match, location) => location.pathname === "/feed"}
-      >
+    <div className={`tabBar ${isVisible ? "" : "hide"}`}>
+      <NavLink to="/feed">
         <button className="noStyleBtn">
           <img
             src={
@@ -35,10 +32,7 @@ const TabBar = () => {
           />
         </button>
       </NavLink>
-      <NavLink
-        to="/search"
-        isActive={(match, location) => location.pathname === "/search"}
-      >
+      <NavLink to="/search">
         <button className="noStyleBtn">
           <img
             src={
@@ -50,14 +44,11 @@ const TabBar = () => {
           />
         </button>
       </NavLink>
-      <NavLink
-        to="/upload"
-        isActive={(match, location) => location.pathname === "/upload"}
-      >
+      <NavLink to="/newpost">
         <button className="noStyleBtn">
           <img
             src={
-              location.pathname === "/upload"
+              location.pathname === "/newpost"
                 ? "/img/ActiveUploadIcon.svg"
                 : "/img/UploadIcon.svg"
             }
@@ -65,10 +56,7 @@ const TabBar = () => {
           />
         </button>
       </NavLink>
-      <NavLink
-        to="/profile"
-        isActive={(match, location) => location.pathname === "/profile"}
-      >
+      <NavLink to="/profile">
         <button className="noStyleBtn">
           <img
             src={

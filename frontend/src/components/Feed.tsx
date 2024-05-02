@@ -1,22 +1,15 @@
-import { useEffect, useState } from "react";
-import { getFeed } from "@/lib/api";
 import FeedCard from "./FeedCard";
+import { Store, useStore } from "@/zustand";
+
 const Feed = () => {
-  const [posts, setPosts] = useState([]);
-  const refreshPage = async () => {
-    await getFeed().then((json) => {
-      setPosts(json);
-    });
-  };
-  useEffect(() => {
-    refreshPage();
-  }, []);
+  
+  const { posts } = useStore() as Store;
   return (
     <>
-      {posts.map((post) => {
+      {posts!.map((post) => {
         return (
           <div key={post._id}>
-            <FeedCard post={post} refresh={refreshPage} />
+            <FeedCard post={post} />
           </div>
         );
       })}
