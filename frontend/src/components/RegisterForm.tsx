@@ -28,42 +28,42 @@ const RegisterForm = () => {
 				Account
 			</div>
 			<div className="w-[140px] h-[140px] relative">
-				<img src="../img/Type=Logo Default, Component=Logo.jpg" alt="" />
+				<img src="../img/Type=Logo Default, Component=Logo.svg" alt="" />
 			</div>
 			<form
 				className="self-stretch h-[215px] flex-col justify-start items-start gap-8 flex"
 				onSubmit={sendFormData}
 			>
 				<div className="h-[215px] flex-col justify-center items-center gap-5 flex">
-					<div className="w-[380px] h-[60px] px-5 bg-neutral-50 rounded-xl justify-start items-center gap-3 inline-flex">
+					<div className="w-[380px] h-[60px] px-5 bg-black-50 rounded-xl justify-start items-center gap-3 inline-flex">
 						<input
-							className="w-[380px] h-[60px] px-5 bg-neutral-50 rounded-xl justify-start items-center gap-3 inline-flex outline-none"
+							className="w-[380px] h-[60px] px-5 bg-black-50 rounded-xl justify-start items-center gap-3 inline-flex outline-none"
 							type="text"
 							name="username"
 							placeholder="username"
 						/>
 					</div>
-					<div className="w-[380px] h-[60px] px-5 bg-neutral-50 rounded-xl justify-start items-center gap-3 inline-flex">
+					<div className="w-[380px] h-[60px] px-5 bg-black-50 rounded-xl justify-start items-center gap-3 inline-flex">
 						<input
-							className="w-[380px] h-[60px] px-5 bg-neutral-50 rounded-xl justify-start items-center gap-3 inline-flex outline-none"
+							className="w-[380px] h-[60px] px-5 bg-black-50 rounded-xl justify-start items-center gap-3 inline-flex outline-none"
 							type="email"
 							name="email"
 							placeholder="email"
 						/>
 					</div>
-					<div className="w-[380px] h-[60px] px-5 bg-neutral-50 rounded-xl justify-start items-center gap-3 inline-flex">
+					<div className="w-[380px] h-[60px] px-5 bg-black-50 rounded-xl justify-start items-center gap-3 inline-flex">
 						<input
-							className="w-[380px] h-[60px] px-5 bg-neutral-50 rounded-xl justify-start items-center gap-3 inline-flex outline-none"
+							className="w-[380px] h-[60px] px-5 bg-black-50 rounded-xl justify-start items-center gap-3 inline-flex outline-none"
 							type="password"
 							name="password"
 							placeholder="password"
 						/>
-						<div className="w-5 h-5 px-[2.92px] py-[1.67px] justify-center items-center flex">
+						{/* <div className="w-5 h-5 px-[2.92px] py-[1.67px] justify-center items-center flex">
 							<img />
 						</div>
 						<div className="w-5 h-5 px-[1.67px] py-[2.92px] justify-center items-center flex">
 							<img />
-						</div>
+						</div> */}
 					</div>
 					<div className="w-[380px] h-[55px] px-4 py-[18px] bg-primary-500 rounded-[100px] justify-center items-center gap-2.5 inline-flex">
 						<button
