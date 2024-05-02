@@ -17,10 +17,16 @@ const Comments = ({ commentData }) => {
       setAuthor(json);
     });
   };
+
   useEffect(() => {
     refreshComments();
-    getAuthorDetails(comments?.authorId);
   }, []);
+
+  useEffect(() => {
+    if (comments?.authorId) {
+      getAuthorDetails(comments.authorId);
+    }
+  }, [comments]);
   return (
     <>
       <FeedHeader profile={author[0]} />

@@ -12,6 +12,12 @@ const FeedCard = ({ post }) => {
   const [isClicked, setIsClicked] = useState(false);
   const [author, setAuthor] = useState<User>({} as User);
 
+  const navigate = useNavigate();
+
+  const navigateToPost = (id) => {
+    navigate(`/post/${id}`);
+  };
+
   const handleLike = async () => {
     setIsClicked(!isLiked);
     setIsLiked(!isLiked);
