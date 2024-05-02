@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Switch } from "@/components/ui/switch";
 import "../components/animations.css";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const Home = () => {
   const navigate = useNavigate();
