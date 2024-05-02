@@ -6,7 +6,7 @@ const SearchFunc = () => {
   const [searchItem, setSearchItem] = useState("");
   const [filteredUsers, setFilteredUsers] = useState<AllUsers[]>([]);
 
-  const { users, user } = useStore() as Store;
+  const { users, user, loadCurrentUserData } = useStore() as Store;
 
   const filterUsers = () => {
     if (!searchItem.trim()) {
@@ -21,7 +21,6 @@ const SearchFunc = () => {
       const excludeOwnId = filtered!.filter(
         (ownUser) => ownUser._id !== user!._id
       );
-
       setFilteredUsers(excludeOwnId);
     }
   };
@@ -42,7 +41,7 @@ const SearchFunc = () => {
       } else {
         await followUser(userId);
       }
-      filterUsers();
+      loadCurrentUserData();
     } catch (error) {
       console.error("Fehler beim Folgen/Entfolgen des Benutzers:", error);
     }
