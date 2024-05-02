@@ -113,7 +113,6 @@ export const setFollow = async (req, res) => {
     { $push: { following: id } },
     { new: true }
   );
-  console.log('UFollowing', updateFollowing);
   if (!updateFollowers || !updateFollowing) {
     res.status(401).json();
     return;
@@ -134,7 +133,6 @@ export const deleteFollow = async (req, res) => {
     { _id: follower._id },
     { $pull: { following: id } }
   );
-  console.log('UFollowing', updateFollowing);
   if (!updateFollowers || !updateFollowing) {
     res.status(401).json();
     return;

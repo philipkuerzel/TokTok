@@ -4,7 +4,6 @@ import jwt from "jsonwebtoken";
 
 export const userLogin = async (req, res) => {
   const { email, password, } = req.body;
-  console.log('schwachsinn:', req.body);
   if (!email || !password) {
     res.sendStatus(400);
     return;

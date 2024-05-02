@@ -105,7 +105,7 @@ const SearchFunc = () => {
                     onClick={() => handleFollow(filteredUser._id, isFollowing)}
                     className={`text-center text-sm font-medium font-['Urbanist'] leading-tight tracking-tight `}
                   >
-                    {isFollowing ? "Unfollow" : "Follow"}
+                    {isFollowing ? "Following" : "Follow"}
                   </button>
                 </div>
               </div>
