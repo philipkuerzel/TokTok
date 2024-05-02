@@ -1,4 +1,5 @@
 import AddCommentForm from "@/components/AddCommentForm";
+import Comments from "@/components/Comments";
 import FeedCard from "@/components/FeedCard";
 import FeedHeader from "@/components/FeedHeader";
 import { addLike, getSinglePost, getUserData } from "@/lib/api";
@@ -24,10 +25,9 @@ const SinglePost = () => {
     });
   };
 
-  const refreshSinglePost = async (id) => {
-    await getSinglePost(id).then((json) => {
+  const refreshSinglePost = async () => {
+    await getSinglePost(postId).then((json) => {
       setSinglePost(json);
-      console.log(json);
       getAuthorDetails(json.authorId);
     });
   };
@@ -37,7 +37,15 @@ const SinglePost = () => {
     const now = new Date();
     const difference = now - postDate; // Differenz in Millisekunden
     const hours = Math.floor(difference / 3600000); // Umrechnung in Stunden
-    return `${hours}`;
+
+    if (hours > 24 && hours < 48) {
+      const days = Math.floor(hours / 24);
+      return `${days} day ago`;
+    } else if (hours > 48) {
+      const days = Math.floor(hours / 24);
+      return `${days} days ago`;
+    }
+    return `${hours} hours ago`;
   };
   const [animateLike, setAnimateLike] = useState(false);
   const handleLike = async () => {
@@ -52,7 +60,7 @@ const SinglePost = () => {
   };
 
   useEffect(() => {
-    refreshSinglePost(postId);
+    refreshSinglePost();
   }, []);
   return (
     <>
@@ -64,9 +72,9 @@ const SinglePost = () => {
         <img src="" alt="" />
       </header>
       <FeedHeader profile={authorDetails[0]} />
-      <main>
+      <main className="m-2">
         <p>{singlePost?.caption}</p>
-        <p>{getTimeSince(singlePost?.date)} hours ago</p>
+        <p>{getTimeSince(singlePost?.date)}</p>
         {/* <FeedCard post={singlePost} refresh={refreshSinglePost} /> */}
         <section>
           <div className="m-3 flex">
@@ -98,7 +106,18 @@ const SinglePost = () => {
           </div>
         </section>
       </main>
-      <AddCommentForm postId={singlePost?._id} userId={user[0]?._id} />
+      {singlePost?.comments.map((comment) => {
+        return (
+          <div key={comment._id}>
+            <Comments commentData={comment} />
+          </div>
+        );
+      })}
+      <AddCommentForm
+        postId={singlePost?._id}
+        userId={user[0]?._id}
+        refresh={refreshSinglePost}
+      />
     </>
   );
 };

@@ -13,4 +13,4 @@ export const addLike = (postId, userId) =>
 export const getSinglePost = (id) =>
   api.get(`posts/${id}`, { credentials: "include" }).json();
 export const getComments = (id) =>
-  api.get(`posts/${id}/comments`, { credentials: "include" }).json();
+  api.get(`comments/${id}`, { credentials: "include" }).json();

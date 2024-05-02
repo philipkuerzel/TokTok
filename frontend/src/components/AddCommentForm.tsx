@@ -2,7 +2,11 @@ import { Input } from "@/components/ui/input";
 import { Button } from "./ui/button";
 import { useRef } from "react";
 import { api } from "@/lib/api";
-const AddCommentForm = ({ postId, userId }) => {
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useStore } from "@/zustand";
+
+const AddCommentForm = ({ postId, userId, refresh }) => {
+  const { user } = useStore() as Fulldata & UserData;
   const commentRef = useRef();
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -14,13 +18,20 @@ const AddCommentForm = ({ postId, userId }) => {
           body: JSON.stringify({ content: commentRef.current.value }),
         })
         .json();
+      refresh();
+      commentRef.current.value = "";
     } catch (error) {
       console.error(error);
     }
   };
+
   return (
     <>
-      <div className="flex w-full max-w-sm items-center space-x-2">
+      <div className="flex w-full items-center p-3 space-x-2 fixed bottom-0 left-0 right-0 tabBar">
+        <Avatar>
+          <AvatarImage src={user[0]?.profilePictureUrl} />
+          <AvatarFallback>CN</AvatarFallback>
+        </Avatar>
         <Input
           name="content"
           ref={commentRef}
@@ -28,7 +39,7 @@ const AddCommentForm = ({ postId, userId }) => {
           placeholder="comment here"
         />
         <Button onClick={handleSubmit} type="button">
-          comment
+          Post
         </Button>
       </div>
     </>

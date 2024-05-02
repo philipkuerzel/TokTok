@@ -28,14 +28,21 @@ export const registerUser = async (req, res) => {
 };
 
 export const getUserDetails = async (req, res) => {
-  console.dir(req.user);
-  const { id } = req.params;
-  const user = await User.findById(id).lean();
-  if (!user) {
-    res.status(401).json({ message: "User not found" });
-    return;
+  try {
+    console.dir(req.user);
+
+    const { id } = req.params;
+    const user = await User.findById(id).lean();
+
+    if (!user) {
+      return res.status(401).json({ message: "User not found" });
+    }
+
+    return res.json([user]);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Internal server error" });
   }
-  res.json([user]);
 };
 
 export const getCurrentUserDetails = async (req, res) => {
