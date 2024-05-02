@@ -17,11 +17,14 @@ function App() {
 
   const navigate = useNavigate();
   useEffect(() => {
-    if (!user && window.location.pathname !== "/register") {
+    if (
+      !user && window.location.pathname !== "/register"
+    ) {
       navigate("/login");
     }
 
     loadCurrentUserData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigate, loadCurrentUserData]);
 
   return (

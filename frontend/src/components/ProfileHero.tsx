@@ -1,7 +1,7 @@
 import { Card, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Avatar } from "@/components/ui/avatar";
-import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import { AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Store, useStore } from "@/zustand";
 
 const ProfileHero = () => {
@@ -39,16 +39,12 @@ const ProfileHero = () => {
               </div>
               <Separator orientation="vertical" />
               <div>
-                <span className="font-bold">
-                  {user!.followers.length}
-                </span>{" "}
+                <span className="font-bold">{user!.followers.length}</span>{" "}
                 Follower
               </div>
               <Separator orientation="vertical" />
               <div>
-                <span className="font-bold">
-                  {user!.following.length}
-                </span>{" "}
+                <span className="font-bold">{user!.following.length}</span>{" "}
                 Following
               </div>
             </div>

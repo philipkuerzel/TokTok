@@ -1,6 +1,5 @@
 import { useStore } from "@/zustand";
 import Feed from "@/components/Feed";
-import { useNavigate } from "react-router-dom";
 import TabBar from "@/components/TabBar";
 import {
   DropdownMenu,
@@ -15,16 +14,9 @@ import "../components/animations.css";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
 const Home = () => {
-  const navigate = useNavigate();
   const { logout } = useStore() as { logout: () => void };
-  const handleLogout = async () => {
-    logout();
-    navigate("/login");
-  };
   return (
     <>
-      {/* <button onClick={handleLogout}>Logout</button>
-      <a href="/profile">Profile</a> */}
       <header className="flex m-3 justify-between items-center">
         <div className="flex m-3 items-center">
           <img className="max-h- max-w-7" src="./img/logo.jpg" alt="" />
@@ -48,7 +40,7 @@ const Home = () => {
                 <Switch className="m-2" />
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
+              <DropdownMenuItem onClick={logout}>Logout</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

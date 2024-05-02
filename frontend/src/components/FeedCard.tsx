@@ -3,14 +3,21 @@ import { useState } from "react";
 import FeedHeader from "./FeedHeader";
 import { Store, useStore, Post } from "@/zustand";
 import "./animations.css";
+import { useNavigate } from "react-router-dom";
 
 const FeedCard = ({ post }: { post: Post }) => {
   const { user, loadCurrentUserData } = useStore() as Store;
-  const [isLiked, setIsLiked] = useState(post.likes.includes(user!._id));
-  const [isClicked, setIsClicked] = useState(false);
+  const [isLiked, setIsLiked] = useState(
+    user ? post.likes.includes(user._id) : false
+  );
+  const navigate = useNavigate();
+  if (!user) return null;
+
+  const navigateToPost = (id) => {
+    navigate(`/post/${id}`);
+  };
 
   const handleLike = async () => {
-    setIsClicked(!isLiked);
     setIsLiked(!isLiked);
     await addLike(post._id, user!._id);
     loadCurrentUserData();

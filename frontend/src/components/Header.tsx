@@ -1,12 +1,16 @@
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@radix-ui/react-dropdown-menu";
 import { Switch } from "@radix-ui/react-switch";
 import { useStore } from "@/zustand";
 
 const Header = () => {
-    const { logout } = useStore();
-    const handleLogout = async () => {
-      logout();
-    };
+  const { logout } = useStore();
   return (
     <>
       <header className="flex m-3 justify-between items-center">
@@ -31,7 +35,7 @@ const Header = () => {
                 <Switch className="m-2" />
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
+              <DropdownMenuItem onClick={logout}>Logout</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

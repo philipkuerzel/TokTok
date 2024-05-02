@@ -23,7 +23,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { api } from "@/lib/api";
 
 const EditProfile = () => {
-  const { user, loadCurrentUserData } = useStore() as Store
+  const { user, loadCurrentUserData } = useStore() as Store;
   const hiddenFileInput = useRef<HTMLInputElement>(null);
   const handleClick = () => {
     hiddenFileInput.current?.click();
@@ -37,8 +37,6 @@ const EditProfile = () => {
       reader.onloadend = () => {
         if (reader.result instanceof ArrayBuffer) {
           const buffer = reader.result;
-          const formData = new FormData();
-          formData.append("profilepicture", new Blob([buffer]));
           form.setValue("profilepicture", new Blob([buffer]));
         }
       };
