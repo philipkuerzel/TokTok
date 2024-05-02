@@ -1,3 +1,4 @@
+import { followUser, unfollowUser } from "@/lib/api";
 import { useStore, Store, AllUsers } from "@/zustand";
 import { useEffect, useState } from "react";
 
@@ -5,7 +6,7 @@ const SearchFunc = () => {
   const [searchItem, setSearchItem] = useState("");
   const [filteredUsers, setFilteredUsers] = useState<AllUsers[]>([]);
 
-  const { users, user } = useStore() as Store;
+  const { users, user, loadCurrentUserData } = useStore() as Store;
 
   const filterUsers = () => {
     if (!searchItem.trim()) {
@@ -20,7 +21,6 @@ const SearchFunc = () => {
       const excludeOwnId = filtered!.filter(
         (ownUser) => ownUser._id !== user!._id
       );
-
       setFilteredUsers(excludeOwnId);
     }
   };
@@ -33,6 +33,19 @@ const SearchFunc = () => {
     filterUsers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchItem, users]);
+
+  const handleFollow = async (userId, isFollowing) => {
+    try {
+      if (isFollowing) {
+        await unfollowUser(userId);
+      } else {
+        await followUser(userId);
+      }
+      loadCurrentUserData();
+    } catch (error) {
+      console.error("Fehler beim Folgen/Entfolgen des Benutzers:", error);
+    }
+  };
 
   return (
     <>
@@ -58,33 +71,41 @@ const SearchFunc = () => {
               <div className="self-stretch h-1 bg-primary-500 rounded-[100px]"></div>
             </div>
           </div>
-          {filteredUsers.map((user) => {
+          {filteredUsers.map((filteredUser) => {
+            const isFollowing = filteredUser?.followers.includes(user!._id);
             return (
               <div
-                key={user._id}
+                key={filteredUser._id}
                 className="w-[380px] justify-start items-center gap-3 inline-flex"
               >
                 <div className="grow shrink basis-0 h-[60px] justify-start items-center gap-5 flex">
                   <div className="w-[60px] h-[60px] justify-center items-center flex">
                     <img
                       className="w-[60px] h-[60px] rounded-full"
-                      src={user?.profilePictureUrl}
+                      src={filteredUser?.profilePictureUrl}
                     />
                   </div>
                   <div className="grow shrink basis-0 flex-col justify-start items-start gap-1 inline-flex">
                     <div className="self-stretch text-neutral-800 text-lg font-bold font-['Urbanist'] leading-snug">
-                      {user?.username}
+                      {filteredUser?.username}
                     </div>
                     <div className="self-stretch text-zinc-600 text-sm font-medium font-['Urbanist'] leading-tight tracking-tight">
-                      {user?.job}
+                      {filteredUser?.job}
                     </div>
                   </div>
                 </div>
-                <div className="px-4 py-1.5 bg-primary-500 rounded-[100px] justify-center items-center gap-1 flex">
-                  <button className="text-center text-primary-50 text-sm font-semibold font-['Urbanist'] leading-tight tracking-tight">
-                    {user.followers!.includes(user!._id)
-                      ? "Unfollow"
-                      : "Follow"}
+                <div
+                  className={`px-4 py-1.5 rounded-[100px] justify-center items-center gap-1 flex ${
+                    isFollowing
+                      ? "bg-white text-primary-500 border-2 border-primary-500"
+                      : "bg-primary-500 text-primary-50"
+                  }`}
+                >
+                  <button
+                    onClick={() => handleFollow(filteredUser._id, isFollowing)}
+                    className={`text-center text-sm font-medium font-['Urbanist'] leading-tight tracking-tight `}
+                  >
+                    {isFollowing ? "Unfollow" : "Follow"}
                   </button>
                 </div>
               </div>

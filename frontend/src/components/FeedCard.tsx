@@ -1,16 +1,13 @@
 import { addLike } from "@/lib/api";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import FeedHeader from "./FeedHeader";
-import { Store, useStore, User } from "@/zustand";
+import { Store, useStore, Post } from "@/zustand";
 import "./animations.css";
-import { Skeleton } from "./ui/skeleton";
-import { useNavigate } from "react-router-dom";
 
-const FeedCard = ({ post }) => {
-  const { user, getUserById, loadCurrentUserData } = useStore() as Store;
-  const [isLiked, setIsLiked] = useState(post.likes.includes(user?._id));
+const FeedCard = ({ post }: { post: Post }) => {
+  const { user, loadCurrentUserData } = useStore() as Store;
+  const [isLiked, setIsLiked] = useState(post.likes.includes(user!._id));
   const [isClicked, setIsClicked] = useState(false);
-  const [author, setAuthor] = useState<User>({} as User);
 
   const navigate = useNavigate();
 
@@ -25,27 +22,20 @@ const FeedCard = ({ post }) => {
     loadCurrentUserData();
   };
 
-  useEffect(() => {
-    getUserById(post.authorId).then((json: User) => {
-      setAuthor(json);
-    });
-  }, [post.authorId]);
-
   return (
     <>
       <section className="m-3">
-        <FeedHeader key={post._id} profile={author} />
+        <FeedHeader key={post._id} profile={post.authorId} />
         <img className=" min-w-full rounded-3xl" src={post.imageUrl} alt="" />
         <div className="m-3 flex">
           <div className="flex m-3">
             <button onClick={handleLike}>
               <img
-                // className={isClicked ? "jello-horizontal" : ""}
                 className={
-                  post?.likes.includes(user[0]?._id) ? "jello-horizontal" : ""
+                  post?.likes.includes(user!._id) ? "jello-horizontal" : ""
                 }
                 src={
-                  post.likes.includes(user?._id)
+                  post.likes.includes(user!._id)
                     ? "./img/liked.svg"
                     : "./img/favorites.svg"
                 }

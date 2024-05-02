@@ -4,12 +4,13 @@ import { Post } from "./post.model.js";
 import { uploadImage } from "../utils/uploadImage.js";
 
 export const getPosts = async (req, res) => {
-  const posts = await Post.find().sort({ date: -1 });
+  const posts = await Post.find().sort({ date: -1 }).populate("authorId")
+  console.log(posts);
   res.json(posts);
 };
 
 export const getPost = async (req, res) => {
-  const post = await Post.findById(req.params.id);
+  const post = await Post.findById(req.params.id)
   res.json(post);
 };
 

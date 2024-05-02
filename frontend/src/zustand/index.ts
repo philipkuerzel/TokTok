@@ -41,7 +41,7 @@ export interface AllUsers {
 
 export interface Post {
   _id: string;
-  authorId: string;
+  authorId: User;
   imageUrl: string;
   likes: string[];
   comments: string[];
