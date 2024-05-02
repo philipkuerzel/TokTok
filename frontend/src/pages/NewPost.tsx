@@ -87,7 +87,8 @@ const NewPost = () => {
     formData.append("caption", caption);
     formData.append("city", location.city);
     try {
-      await api.post(`posts/${user!._id}`, {
+      if (user)
+      await api.post(`posts/${user._id}`, {
         body: formData,
         credentials: "include",
       });
@@ -128,21 +129,21 @@ const NewPost = () => {
 
   return (
     <>
-      {!file ? (
+      {!file && user ? (
         <>
           <div className="flex items-center m-3 gap-5 mt-10 pl-5">
             <img src="./img/close.svg" className="" />
             <h2 className="text-3xl font-semibold">New Post</h2>
           </div>
           <Card className="border-none flex items-center align-center justify-center mt-5">
-            {file ? (
+            {file && user ? (
               <img
                 src={file}
                 className="flex items-center justify-center w-96 h-96 bg-black-200 rounded-xl mt-5"
               />
             ) : (
               <div className="flex items-center justify-center w-96 h-96 bg-black-200 rounded-xl mt-5">
-                {file ? null : (
+                {file && user ? null : (
                   <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)}>
                       <FormField
@@ -167,6 +168,7 @@ const NewPost = () => {
                               />
                             </FormControl>
                           </FormItem>
+                          
                         )}
                       />
                     </form>
@@ -189,14 +191,15 @@ const NewPost = () => {
             <h2 className="text-3xl font-semibold">New Post</h2>
           </div>
           <div className="flex gap-5 align-middle items-center justify-center">
+          {user ? (
             <Avatar className="w-20 h-20 border">
               <AvatarImage
-                src={user!.profilePictureUrl}
+                src={user.profilePictureUrl}
                 className="w-full h-full object-cover"
               />
-              <AvatarFallback>{user!.username}</AvatarFallback>
+              <AvatarFallback>{user.username}</AvatarFallback>
             </Avatar>
-
+          ) : null}
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)}>
                 <Input
