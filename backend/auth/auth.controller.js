@@ -3,7 +3,8 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 export const userLogin = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, } = req.body;
+  console.log('schwachsinn:', req.body);
   if (!email || !password) {
     res.sendStatus(400);
     return;
@@ -20,7 +21,7 @@ export const userLogin = async (req, res) => {
   }
 
   const token = jwt.sign(
-    { username: user.username, email },
+    { username: user.username, email, userId: user._id},
     process.env.JWT_SECRET
   );
   res.cookie("token", token);
