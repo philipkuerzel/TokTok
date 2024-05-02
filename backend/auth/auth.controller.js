@@ -28,7 +28,7 @@ export const userLogin = async (req, res) => {
   res.json({ status: "ok" });
 };
 
-export const userLogout = (req, res) => {
+export const userLogout = async (req, res) => {
   res.clearCookie("token");
   res.end();
 };

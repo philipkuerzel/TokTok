@@ -116,6 +116,7 @@ export const useStore = create<Store>()(
       logout: async () => {
         await api.post("auth/logout", { credentials: "include" });
         set({ user: null });
+        window.location.href = "/login";
       },
     }),
     {
