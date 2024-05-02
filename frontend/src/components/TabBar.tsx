@@ -4,10 +4,10 @@ import "./tabBar.css";
 
 const TabBar = () => {
   const [isVisible, setIsVisible] = useState(true);
+  let lastScrollTop = 0;
 
   useEffect(() => {
     window.onscroll = function () {
-      let lastScrollTop = 0;
       const st = window.pageYOffset || document.documentElement.scrollTop;
       if (st > lastScrollTop) {
         setIsVisible(false);
