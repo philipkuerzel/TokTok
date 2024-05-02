@@ -6,8 +6,16 @@ export const getComments = async (req, res) => {
 };
 
 export const getSingleComment = async (req, res) => {
-  const { id } = req.params;
-  const comment = await Comment.findById(id);
-  if (!comment) res.status(401).json({ message: "Comment not found" });
-  res.json(comment);
+  try {
+    const { id } = req.params;
+    const comment = await Comment.findById(id);
+
+    if (!comment) {
+      res.status(401).json({ message: "Comment not found" });
+    } else {
+      res.json(comment);
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
 };

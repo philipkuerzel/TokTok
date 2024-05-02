@@ -43,26 +43,39 @@ export const createPost = async (req, res) => {
   }
   res.json(newPost);
 };
-
 export const addComment = async (req, res) => {
   const { id, userId } = req.params;
-  const { comment } = req.body;
-  const user = await User.findById(userId);
+  const { content } = req.body;
 
-  const newComment = new Comment({
-    comment,
-    username: user.username,
-  });
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
 
-  await newComment.save().then(() => res.json("Comment added"));
-  const updatePost = await Post.findByIdAndUpdate(
-    { _id: id },
-    { $push: { comments: newComment } }
-  );
-  if (!updatePost) res.status(401).json({ message: "Comment not added" });
-  res.json(updatePost);
+    const newComment = new Comment({
+      content,
+      username: user.username,
+      authorId: userId,
+    });
+
+    await newComment.save();
+    const updatedPost = await Post.findByIdAndUpdate(
+      { _id: id },
+      { $push: { comments: newComment } },
+      { new: true }
+    );
+
+    if (!updatedPost) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    res.json({ message: "Comment added", post: updatedPost });
+  } catch (error) {
+    console.error("Error adding comment:", error);
+    res.status(500).json({ message: "Failed to add comment" });
+  }
 };
-
 export const deletePost = async (req, res) => {
   const { id } = req.params;
   const post = await Post.findByIdAndDelete(id);

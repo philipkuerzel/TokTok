@@ -5,16 +5,23 @@ import { useStore } from "@/zustand";
 import { Fulldata, UserData } from "@/zustand";
 import "./animations.css";
 import { Skeleton } from "./ui/skeleton";
+import { useNavigate } from "react-router-dom";
 
 const FeedCard = ({ post, refresh }) => {
   const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState();
   const { user } = useStore() as Fulldata & UserData;
-  const [isLiked, setIsLiked] = useState(post.likes.includes(user[0]?._id));
+  const [isLiked, setIsLiked] = useState(post?.likes.includes(user[0]?._id));
   const [isClicked, setIsClicked] = useState(false);
 
+  const navigate = useNavigate();
+
+  const navigateToPost = (id) => {
+    navigate(`/post/${id}`);
+  };
+
   useEffect(() => {
-    getUserData(post.authorId).then((json) => {
+    getUserData(post?.authorId).then((json) => {
       setUserData(json);
     });
   }, []);
@@ -63,29 +70,36 @@ const FeedCard = ({ post, refresh }) => {
         })}
         <img
           className=" min-w-full rounded-3xl aspect-square object-cover"
-          src={post.imageUrl}
+          src={post?.imageUrl}
           alt=""
         />
         <div className="m-3 flex">
           <div className="flex m-3">
             <button onClick={handleLike}>
               <img
-                className={isClicked ? "jello-horizontal" : ""}
+                // className={isClicked ? "jello-horizontal" : ""}
+                className={
+                  post?.likes.includes(user[0]?._id) ? "jello-horizontal" : ""
+                }
                 src={
-                  post.likes.includes(user[0]?._id)
+                  post?.likes.includes(user[0]?._id)
                     ? "./img/liked.svg"
                     : "./img/favorites.svg"
                 }
                 alt=""
               />
             </button>
-            <p className="m-2 min-w-6">{post.likes.length}</p>
+            <p className="m-2 min-w-6">{post?.likes.length}</p>
           </div>
           <div className="flex m-3">
-            <button>
+            <button
+              onClick={() => {
+                navigateToPost(post._id);
+              }}
+            >
               <img src="./img/comment.svg" alt="" />
             </button>
-            <p className="m-2">{post.comments.length}</p>
+            <p className="m-2">{post?.comments.length}</p>
           </div>
         </div>
       </section>
