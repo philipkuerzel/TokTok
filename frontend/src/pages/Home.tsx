@@ -32,7 +32,7 @@ const Home = () => {
         </div>
         <div className="m-3">
           <DropdownMenu>
-            <DropdownMenuTrigger>
+            <DropdownMenuTrigger className="">
               <img src="./img/settings.svg" alt="" />
             </DropdownMenuTrigger>
             <DropdownMenuContent>
