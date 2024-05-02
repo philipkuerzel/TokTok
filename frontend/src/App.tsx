@@ -4,19 +4,21 @@ import Register from "./pages/Register";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import { useEffect } from "react";
-import { Store, useStore} from "@/zustand";
+import { Store, useStore } from "@/zustand";
 import EditProfile from "./pages/EditProfile";
 import SplashScreen from "./components/SplashScreen";
 import Search from "./pages/Search";
+import NewPost from "./pages/NewPost";
 
 function App() {
   const { user, loadCurrentUserData, logout } = useStore() as Store;
 
   const navigate = useNavigate();
   useEffect(() => {
-    if (!user) {
+    if (!user && window.location.pathname !== "/register") {
       navigate("/login");
     }
+    
     loadCurrentUserData();
   }, [navigate, loadCurrentUserData]);
 
@@ -30,6 +32,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/edit-profile/:userId" element={<EditProfile />} />
         <Route path="/search" element={<Search />} />
+        <Route path="/newpost" element={<NewPost />} />
         <Route path="*" element={<button onClick={logout}>404</button>} />
       </Routes>
     </>

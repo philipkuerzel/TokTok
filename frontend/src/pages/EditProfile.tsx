@@ -270,8 +270,8 @@ const EditProfile = () => {
                       <SelectTrigger>
                         <SelectValue
                           placeholder={
-                            user!.gender.charAt(0).toUpperCase() +
-                            user!.gender.slice(1)
+                            user!.gender?.charAt(0).toUpperCase() +
+                            user!.gender?.slice(1)
                           }
                         />
                       </SelectTrigger>

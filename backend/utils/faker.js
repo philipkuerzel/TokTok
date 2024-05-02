@@ -10,6 +10,15 @@ const createFakeUsers = async (num) => {
       passwordHash: faker.internet.password(),
       email: faker.internet.email(),
       password: faker.internet.password(),
+      gender: "male",
+      followers: [],
+      following: [],
+      bio: faker.lorem.sentence(),
+      userGroup: "user",
+      emailVerified: false,
+      job: faker.person.jobTitle(),
+      website: faker.internet.url(),
+      phone: faker.phone.phoneNumber,
     });
     await user.save();
   }
@@ -19,8 +28,10 @@ const createFakePosts = async (num) => {
   for (let i = 0; i < num; i++) {
     const post = new Post({
       caption: faker.lorem.sentence(),
-      imageUrl: faker.image.imageUrl(),
+      imageUrl: faker.image.url(),
       username: faker.internet.userName(),
+      likes: [],
+      comments: [],
     });
     await post.save();
   }
@@ -38,8 +49,8 @@ const createFakeComments = async (num) => {
 
 const createFakeData = async (num) => {
   await createFakeUsers(num);
-  await createFakePosts(num);
-  await createFakeComments(num);
+  // await createFakePosts(num);
+  // await createFakeComments(num);
 };
-
+createFakeData(1);
 export default createFakeData;

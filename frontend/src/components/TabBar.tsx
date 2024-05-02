@@ -20,9 +20,7 @@ const TabBar = () => {
 
   return (
     <div className={`tabBar ${isVisible ? "" : "hide"}`}>
-      <NavLink
-        to="/feed"
-      >
+      <NavLink to="/feed">
         <button className="noStyleBtn">
           <img
             src={
@@ -34,9 +32,7 @@ const TabBar = () => {
           />
         </button>
       </NavLink>
-      <NavLink
-        to="/search"
-      >
+      <NavLink to="/search">
         <button className="noStyleBtn">
           <img
             src={
@@ -48,13 +44,11 @@ const TabBar = () => {
           />
         </button>
       </NavLink>
-      <NavLink
-        to="/upload"
-      >
+      <NavLink to="/newpost">
         <button className="noStyleBtn">
           <img
             src={
-              location.pathname === "/upload"
+              location.pathname === "/newpost"
                 ? "/img/ActiveUploadIcon.svg"
                 : "/img/UploadIcon.svg"
             }
@@ -62,9 +56,7 @@ const TabBar = () => {
           />
         </button>
       </NavLink>
-      <NavLink
-        to="/profile"
-      >
+      <NavLink to="/profile">
         <button className="noStyleBtn">
           <img
             src={

@@ -84,7 +84,7 @@ export const useStore = create<Store>()(
                 .get(`users/${currentUser._id}`, { credentials: "include" })
                 .json() as Promise<User>,
               api
-                .get(`posts/user/${currentUser._id}`, {
+                .get(`posts`, {
                   credentials: "include",
                 })
                 .json() as Promise<Post[]>,
