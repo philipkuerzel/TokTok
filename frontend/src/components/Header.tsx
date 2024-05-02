@@ -4,9 +4,7 @@ import { useStore } from "@/zustand";
 
 const Header = () => {
     const { logout } = useStore();
-    const handleLogout = async () => {
-      logout();
-    };
+    
   return (
     <>
       <header className="flex m-3 justify-between items-center">
@@ -31,7 +29,7 @@ const Header = () => {
                 <Switch className="m-2" />
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
+              <DropdownMenuItem onClick={logout}>Logout</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
