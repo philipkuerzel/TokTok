@@ -22,10 +22,10 @@ import { Switch } from "@/components/ui/switch";
 import { api } from "@/lib/api";
 
 const NewPost = () => {
-  const { user } = useStore() as Store;
+  const { user, posts } = useStore() as Store;
   const hiddenFileInput = useRef<HTMLInputElement>(null);
   const formData = new FormData();
-  const fileRef = useRef(null);
+  const fileRef = useRef<File | null>(null);
   const [file, setFile] = useState<string | undefined>();
   const [location, setLocation] = useState<{
     latitude: number;
@@ -43,6 +43,25 @@ const NewPost = () => {
 
   const handleClick = () => {
     hiddenFileInput.current?.click();
+  };
+
+  const handleGalleryClick = async (imageUrl: string) => {
+    const response = await ky.get(imageUrl);
+    const data = await response.blob();
+    const metadata = { type: data.type };
+    const file = new File([data], "filename", metadata);
+    if (file) {
+      setFile(imageUrl);
+      fileRef.current = file;
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        if (reader.result instanceof ArrayBuffer) {
+          const buffer = reader.result;
+          form.setValue("imageUrl", new Blob([buffer]));
+        }
+      };
+      reader.readAsArrayBuffer(new Blob([imageUrl]));
+    }
   };
 
   const handleChange = (event) => {
@@ -88,10 +107,10 @@ const NewPost = () => {
     formData.append("city", location.city);
     try {
       if (user)
-      await api.post(`posts/${user._id}`, {
-        body: formData,
-        credentials: "include",
-      });
+        await api.post(`posts/${user._id}`, {
+          body: formData,
+          credentials: "include",
+        });
     } catch (error) {
       console.error(error);
     }
@@ -168,7 +187,6 @@ const NewPost = () => {
                               />
                             </FormControl>
                           </FormItem>
-                          
                         )}
                       />
                     </form>
@@ -176,6 +194,24 @@ const NewPost = () => {
                 )}
               </div>
             )}
+          </Card>
+          <div className="flex m-5 align-center items-center justify-between">
+            <h2 className="text-lg font-semibold">Gallery</h2>
+            <div className="flex gap-5">
+              <img src="./img/category.svg" className="w-6 h-6" />
+              <img src="./img/camera-bold.svg" className="w-6 h-6" />
+            </div>
+          </div>
+          <Card className="border-none grid grid-cols-3 grid-rows-3 mt-5 gap-1 m-5">
+            {posts &&
+              posts.map((post) => (
+                <img
+                  src={post.imageUrl}
+                  className="rounded-xl w-full h-full object-cover"
+                  key={post._id}
+                  onClick={() => handleGalleryClick(post.imageUrl)}
+                />
+              ))}
           </Card>
         </>
       ) : (
@@ -191,15 +227,15 @@ const NewPost = () => {
             <h2 className="text-3xl font-semibold">New Post</h2>
           </div>
           <div className="flex gap-5 align-middle items-center justify-center">
-          {user ? (
-            <Avatar className="w-20 h-20 border">
-              <AvatarImage
-                src={user.profilePictureUrl}
-                className="w-full h-full object-cover"
-              />
-              <AvatarFallback>{user.username}</AvatarFallback>
-            </Avatar>
-          ) : null}
+            {user ? (
+              <Avatar className="w-20 h-20 border">
+                <AvatarImage
+                  src={user.profilePictureUrl}
+                  className="w-full h-full object-cover"
+                />
+                <AvatarFallback>{user.username}</AvatarFallback>
+              </Avatar>
+            ) : null}
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)}>
                 <Input
