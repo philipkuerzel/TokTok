@@ -257,7 +257,7 @@ const NewPost = () => {
                   placeholder="Write a caption..."
                   onChange={(e) => setCaption(e.target.value)}
                   wrap="hard"
-                  className="w-full h-24 bg-black-50 rounded-xl border-none text-center"
+                  className="w-full min-h-24 bg-black-50 rounded-xl border-none text-center placeholder:leading-[5rem] text-lg p-1"
                 />
               </form>
             </Form>

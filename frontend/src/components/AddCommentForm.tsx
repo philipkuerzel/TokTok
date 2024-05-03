@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useStore } from "@/zustand";
 
 const AddCommentForm = ({ postId, userId, refresh }) => {
-  const { user } = useStore() as Fulldata & UserData;
+  const { user } = useStore();
   const commentRef = useRef();
   const handleSubmit = async (e) => {
     e.preventDefault();

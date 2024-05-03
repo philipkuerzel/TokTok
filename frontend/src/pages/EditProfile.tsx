@@ -134,11 +134,14 @@ const EditProfile = () => {
                     />
                     <AvatarFallback>{user!.username}</AvatarFallback>
                   </Avatar>
-                  <img
-                    src="../img/profile-edit.svg"
-                    className="z-10 absolute top-[15rem] left-[60%] sm:left-[54%] sm:top-[16.5rem]"
-                    onClick={handleClick}
-                  />
+              <div className="relative">
+                    <div className="z-10 absolute bottom-[0.5rem] left-[72%] w-full">
+                      <img
+                        src="../img/profile-edit.svg"
+                        onClick={handleClick}
+                      />
+                    </div>
+              </div>
                   <FormControl>
                     <Input
                       type="file"
