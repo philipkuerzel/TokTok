@@ -11,7 +11,6 @@ import Search from "./pages/Search";
 import NewPost from "./pages/NewPost";
 import { ThemeProvider } from "./provider/ThemeProvider";
 import SinglePost from "./pages/SinglePost";
-import Header from "./components/Header";
 import TabBar from "./components/TabBar";
 
 function App() {
@@ -31,7 +30,6 @@ function App() {
 
   return (
     <>
-    <Header />
       <ThemeProvider defaultTheme="system">
         <Routes>
           <Route path="/post/:postId" element={<SinglePost />} />
@@ -46,7 +44,7 @@ function App() {
           <Route path="*" element={<button onClick={logout}>404</button>} />
         </Routes>
       </ThemeProvider>
-      <TabBar />
+      { window.location.pathname === "/login" || window.location.pathname === "/register" ? null : <TabBar />}
     </>
   );
 }

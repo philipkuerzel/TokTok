@@ -17,13 +17,13 @@ const Header = () => {
     <>
            <header className="flex m-3 justify-between items-center">
         <div className="flex m-3 items-center">
-          <img className="max-h- max-w-7" src="./img/logo.jpg" alt="" />
+          <img className="max-h- max-w-7" src="./img/logo.svg" alt="" />
           <h2 className="m-2">Cringestagram</h2>
         </div>
         <div className="m-3">
           <DropdownMenu>
             <DropdownMenuTrigger>
-              <img src="./img/settings.svg" alt="" />
+              <img src="/img/settings.svg" alt="" />
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuLabel>My Account</DropdownMenuLabel>

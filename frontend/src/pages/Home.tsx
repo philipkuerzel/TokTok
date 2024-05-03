@@ -1,10 +1,10 @@
-import { useStore } from "@/zustand";
 import Feed from "@/components/Feed";
+import Header from "@/components/Header";
 
 const Home = () => {
-  const { logout } = useStore()
   return (
     <>
+      <Header />
       <Feed />
     </>
   );

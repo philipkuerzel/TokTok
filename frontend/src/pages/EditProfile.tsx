@@ -164,7 +164,7 @@ const EditProfile = () => {
                   <FormControl>
                     <Input
                       {...field}
-                      className="min-w-[300px] bg-black-50 border-none"
+                      className="min-w-[300px] bg-black-50 border-none dark:bg-black-500"
                     />
                   </FormControl>
                   <FormMessage />
@@ -179,7 +179,7 @@ const EditProfile = () => {
                   <FormControl>
                     <Input
                       {...field}
-                      className="min-w-[300px] bg-black-50 border-none"
+                      className="min-w-[300px] bg-black-50 border-none dark:bg-black-500"
                     />
                   </FormControl>
                   <FormMessage />
@@ -194,7 +194,7 @@ const EditProfile = () => {
                   <FormControl>
                     <Input
                       {...field}
-                      className="min-w-[300px] bg-black-50 border-none"
+                      className="min-w-[300px] bg-black-50 border-none dark:bg-black-500"
                     />
                   </FormControl>
                   <FormMessage />
@@ -209,7 +209,7 @@ const EditProfile = () => {
                   <FormControl>
                     <Input
                       {...field}
-                      className="min-w-[300px] bg-black-50 border-none"
+                      className="min-w-[300px] bg-black-50 border-none dark:bg-black-500"
                     />
                   </FormControl>
                   <FormMessage />
@@ -225,7 +225,7 @@ const EditProfile = () => {
                     <Input
                       {...field}
                       type="date"
-                      className="min-w-[300px] bg-black-50 border-none"
+                      className="min-w-[300px] bg-black-50 border-none dark:bg-black-500"
                     />
                   </FormControl>
                   <FormMessage />
@@ -240,7 +240,7 @@ const EditProfile = () => {
                   <FormControl>
                     <Input
                       {...field}
-                      className="min-w-[300px] bg-black-50 border-none"
+                      className="min-w-[300px] bg-black-50 border-none dark:bg-black-500"
                     />
                   </FormControl>
                   <FormMessage />
@@ -256,7 +256,7 @@ const EditProfile = () => {
                     <Input
                       {...field}
                       type="tel"
-                      className="min-w-[300px] bg-black-50 border-none"
+                      className="min-w-[300px] bg-black-50 border-none dark:bg-black-500"
                     />
                   </FormControl>
                   <FormMessage />
@@ -269,7 +269,7 @@ const EditProfile = () => {
               render={({ field }) => (
                 <FormItem>
                   <Select onValueChange={field.onChange}>
-                    <FormControl className="min-w-[300px] bg-black-50 border-none">
+                    <FormControl className="min-w-[300px] bg-black-50 border-none dark:bg-black-500">
                       <SelectTrigger>
                         <SelectValue
                           placeholder={
@@ -298,7 +298,7 @@ const EditProfile = () => {
                     <Input
                       {...field}
                       type="url"
-                      className="min-w-[300px] bg-black-50 border-none"
+                      className="min-w-[300px] bg-black-50 border-none dark:bg-black-500"
                     />
                   </FormControl>
                   <FormMessage />

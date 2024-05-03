@@ -168,7 +168,7 @@ const NewPost = () => {
                 className="flex items-center justify-center w-96 h-96 bg-black-200 rounded-xl mt-5"
               />
             ) : (
-              <div className="flex items-center justify-center w-96 h-96 bg-black-200 rounded-xl mt-5">
+              <div className="flex items-center justify-center w-80 h-80 bg-black-200 rounded-xl mt-5">
                 {file && user ? null : (
                   <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -233,7 +233,7 @@ const NewPost = () => {
             />
             <h2 className="text-3xl font-semibold">New Post</h2>
           </div>
-          <div className="flex gap-5 align-middle items-center justify-center">
+          <div className="flex gap-5 align-middle items-center justify-center m-3">
             {user ? (
               <Avatar className="w-20 h-20 border">
                 <AvatarImage
@@ -257,20 +257,23 @@ const NewPost = () => {
                   placeholder="Write a caption..."
                   onChange={(e) => setCaption(e.target.value)}
                   wrap="hard"
-                  className="w-full min-h-24 bg-black-50 rounded-xl border-none text-center placeholder:leading-[5rem] text-lg p-1"
+                  className="w-full h-20 bg-black-50 rounded-xl border-none text-center placeholder:leading-[4.5rem] text-lg p-1 dark:text-black-500"
                 />
               </form>
             </Form>
             <img src={file} className="w-20 h-20 bg-black-200 rounded-xl" />
           </div>
           <SelectSeparator className="my-10" />
-          <div className="flex items-center justify-center gap-2">
+          <div className="flex items-center justify-center gap-2 m-3">
             <Form {...form}>
-              <img
-                src="./img/location.svg"
-                onClick={handleLocation}
-                className="ml-5"
-              />
+              <div className="relative inline-flex">
+                <img
+                  src="./img/location.svg"
+                  onClick={handleLocation}
+                  className="ml-5"
+                />
+                <span className="absolute min-w-[6px] min-h-[6px] rounded-full py-1 px-1 text-xs font-medium content-[''] leading-none grid place-items-center bottom-[55%] left-[95%] translate-x-2/4 -translate-y-2/4 bg-primary-500 text-white"></span>
+              </div>
               <Autocomplete
                 className="w-full mx-5 h-12 bg-black-50 rounded-xl border-none pl-5"
                 apiKey={import.meta.env.VITE_GOOGLE_API_KEY}
@@ -296,7 +299,7 @@ const NewPost = () => {
             </Form>
           </div>
           <SelectSeparator className="my-10" />
-          <div className="flex items-center m-3 gap-5 mt-10 pl-5">
+          <div className="flex items-center m-5 gap-5 mt-10">
             <p className="text-lg">Also post to</p>
           </div>
           <div className="flex flex-col items-center justify-center gap-2">
@@ -305,7 +308,7 @@ const NewPost = () => {
                 control={form.control}
                 name="facebook"
                 render={({ field }) => (
-                  <FormItem className="flex flex-row items-center justify-between rounded-lg w-full m-3 px-5">
+                  <FormItem className="flex flex-row items-center justify-between rounded-lg w-full px-10">
                     <div className="space-y-0.5">
                       <FormLabel className="text-base">Facebook</FormLabel>
                     </div>
@@ -323,7 +326,7 @@ const NewPost = () => {
                 control={form.control}
                 name="twitter"
                 render={({ field }) => (
-                  <FormItem className="flex flex-row items-center justify-between rounded-lg w-full m-3 gap-5 px-5">
+                  <FormItem className="flex flex-row items-center justify-between rounded-lg w-full px-10">
                     <div className="space-y-0.5">
                       <FormLabel className="text-base">Twitter</FormLabel>
                     </div>
@@ -341,7 +344,7 @@ const NewPost = () => {
                 control={form.control}
                 name="tumblr"
                 render={({ field }) => (
-                  <FormItem className="flex flex-row items-center justify-between rounded-lg w-full m-3 gap-5 px-5">
+                  <FormItem className="flex flex-row items-center justify-between rounded-lg w-full px-10">
                     <div className="space-y-0.5">
                       <FormLabel className="text-base">Tumblr</FormLabel>
                     </div>
@@ -357,9 +360,9 @@ const NewPost = () => {
               />
             </Form>
           </div>
-          <div className="flex items-center justify-center gap-5">
+          <div className="flex items-center justify-center">
             <Button
-              className="bg-primary-500 w-72 rounded-full"
+              className="bg-primary-500 w-80 rounded-full dark:text-[#FFF] mt-4"
               onClick={onSubmit}
             >
               Post
@@ -367,7 +370,7 @@ const NewPost = () => {
           </div>
           <SelectSeparator className="my-5" />
           <div className="flex items-center gap-">
-            <img src="./img/settings.svg" className="px-5" />
+            <img src="./img/settings.svg" className="px-10" />
             <h2 className="text-lg font-semibold">Advanced Settings</h2>
           </div>
         </>
