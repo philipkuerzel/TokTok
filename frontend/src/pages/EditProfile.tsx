@@ -21,9 +21,11 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { api } from "@/lib/api";
+import { useNavigate } from "react-router-dom";
 
 const EditProfile = () => {
   const { user, loadCurrentUserData } = useStore() as Store;
+  const navigate = useNavigate();
   const hiddenFileInput = useRef<HTMLInputElement>(null);
   const handleClick = () => {
     hiddenFileInput.current?.click();
@@ -100,8 +102,8 @@ const EditProfile = () => {
       body: formData,
       credentials: "include",
     });
-
     loadCurrentUserData();
+    navigate("/profile");
   };
 
   return (

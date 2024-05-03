@@ -20,9 +20,11 @@ import ky from "ky";
 import Autocomplete from "react-google-autocomplete";
 import { Switch } from "@/components/ui/switch";
 import { api } from "@/lib/api";
+import { useNavigate } from "react-router-dom";
 
 const NewPost = () => {
   const { user, posts } = useStore() as Store;
+  const navigate = useNavigate();
   const hiddenFileInput = useRef<HTMLInputElement>(null);
   const formData = new FormData();
   const fileRef = useRef<File | null>(null);
@@ -111,6 +113,7 @@ const NewPost = () => {
           body: formData,
           credentials: "include",
         });
+      navigate("/feed");
     } catch (error) {
       console.error(error);
     }
@@ -151,7 +154,11 @@ const NewPost = () => {
       {!file && user ? (
         <>
           <div className="flex items-center m-3 gap-5 mt-10 pl-5">
-            <img src="./img/close.svg" className="" />
+            <img
+              src="./img/close.svg"
+              className=""
+              onClick={() => navigate("/feed")}
+            />
             <h2 className="text-3xl font-semibold">New Post</h2>
           </div>
           <Card className="border-none flex items-center align-center justify-center mt-5">
