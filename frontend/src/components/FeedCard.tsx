@@ -27,11 +27,13 @@ const FeedCard = ({ post }: { post: Post }) => {
     <>
       <section className="m-3">
         <FeedHeader key={post._id} profile={post.authorId} />
-        <img
-          className="w-96 h-96 object-cover rounded-3xl"
-          src={post.imageUrl}
-          alt=""
-        />
+        <div className="flex justify-center">
+          <img
+            className="w-96 h-96 object-cover rounded-3xl"
+            src={post.imageUrl}
+            alt=""
+          />
+        </div>
         <div className="m-3 flex">
           <div className="flex m-3">
             <button onClick={handleLike}>
