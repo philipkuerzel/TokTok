@@ -23,3 +23,7 @@
 - 📰 Displaying images in the feed
 
 - 💬 Commenting on posts
+
+## Demo
+
+🌐 Check out the live demo: TokTok Demo
